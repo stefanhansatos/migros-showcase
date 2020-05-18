@@ -1,7 +1,7 @@
 steps:
   - id: gcloud_deploy_http_frontend
     name: 'gcr.io/cloud-builders/gcloud'
-    args: ['functions', 'deploy', 'translation', '--region=europe-west1', '--entry-point=TranslationHTTP',
+    args: ['functions', 'deploy', 'TranslationHTTP', '--region=europe-west1', '--entry-point=translation',
            '--runtime=go111', "--trigger-http",
            '--source=./functions',
            '--set-env-vars=PUBSUB_TOPIC_TRUNC=translation_input',
