@@ -1,0 +1,4 @@
+steps:
+  - id: gcloud_deploy_http_frontend
+    name: 'gcr.io/cloud-builders/gcloud'
+    args: ['functions', 'deploy', 'triggers', 'run', 'boot-test', '--branch=master']
