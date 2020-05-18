@@ -40,10 +40,11 @@ cd functions
 gcloud functions deploy translation --region europe-west1  --entry-point TranslationHTTP --runtime go111 --trigger-http \
     --source=https://source.developers.google.com/projects/hybrid-cloud-22365/repos/github_stefanhansatos_migros-showcase/revisions/master/paths/functions \
     --set-env-vars=PUBSUB_TOPIC_TRUNC=translation_input \
+    --allow-unauthenticated \
     --service-account=smbe-22365@hybrid-cloud-22365.iam.gserviceaccount.com
 
-gcloud functions deploy PubsubTranslationTaskReceiver --region europe-west1  --runtime go111 --trigger-topic=translation_input_0.0.1 \
-    --source=https://source.developers.google.com/projects/hybrid-cloud-22365/repos/github_stefanhansatos_migros-showcase/revisions/master/paths/functions \
+gcloud functions deploy PubsubTranslationTaskReceiver --quiet --region europe-west1  --runtime go111 --trigger-topic=translation_input_0.0.1 \
+    --source=https://source.developers.google.com/projects/hybrid-cloud-22365/repos/github_stefanhansatos_migros-showcase/revisions/master/paths/functions
 
    
 curl -X POST "https://europe-west1-hybrid-cloud-22365.cloudfunctions.net/translation" \

@@ -14,7 +14,7 @@ func PubsubTranslationTaskReceiver(ctx context.Context, message pubsub.Message) 
 	if err != nil {
 		return fmt.Errorf("failed to unmarshal translationTask: %v", err)
 	}
-	translationTaskJson, err := json.MarshalIndent(translationTask, "", " ")
+	translationTaskJson, err := json.Marshal(translationTask)
 	if err != nil {
 		return fmt.Errorf("failed to marshal translationTaskJson: %v", err)
 	}
