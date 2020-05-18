@@ -58,6 +58,12 @@ curl -X POST "https://europe-west1-hybrid-cloud-22365.cloudfunctions.net/transla
 
 - configure deployment steps in `pipeline/01_http-frontend.yaml`
 
+- create trigger in the console
+
+```bash
+gcloud builds submit 
+```
+
 
 gcloud alpha functions add-iam-policy-binding translation --region=europe-west1 --member=allUsers --role=roles/cloudfunctions.invoker
 
