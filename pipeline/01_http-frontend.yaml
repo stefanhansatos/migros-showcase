@@ -1,9 +1,9 @@
 steps:
   - id: gcloud_deploy_http_frontend
     name: 'gcr.io/cloud-builders/gcloud'
-    args: ['functions', 'deploy', 'TranslationHTTP', '--region=europe-west1', '--entry-point=translation',
+    args: ['functions', 'deploy', 'Translation', '--region=europe-west1', '--entry-point=TranslationHTTP',
            '--runtime=go111', "--trigger-http",
-           '--source=./functions',
+           '--source=functions',
            '--set-env-vars=PUBSUB_TOPIC_TRUNC=translation_input',
            '--allow-unauthenticated',
            '--service-account=smbe-22365@hybrid-cloud-22365.iam.gserviceaccount.com'
