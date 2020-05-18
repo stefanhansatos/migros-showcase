@@ -12,6 +12,8 @@
 
 - define function in `functions/http-frontend.go`
 
+- commit and push to repository
+
 - prepare Pub/Sub target for client version 0.0.1
 
 ```bash
@@ -26,13 +28,15 @@ go mod init
 go mod vendor
 ```
 
+- add vendor directory to git temporarily, commit, and push
+
 - test manual deployment (from local)
 
 ```bash
 cd functions
 
 gcloud functions deploy translation --region europe-west1  --entry-point TranslationHTTP --runtime go111 --trigger-http \
-    --source=https://source.developers.google.com/projects/hybrid-cloud-22365/repos/github_stefanhansatos_migros-showcase/functions
+    --source=https://source.developers.google.com/projects/hybrid-cloud-22365/repos/github_stefanhansatos_migros-showcase/revisions/master/paths/functions
     --set-env-vars=PUBSUB_TOPIC_TRUNC=translation_input \
     --service-account=smbe-22365@hybrid-cloud-22365.iam.gserviceaccount.com
     
