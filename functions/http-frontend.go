@@ -121,6 +121,8 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 		LoadCommand:    fmt.Sprintf("gsutil cat gs://hybrid-cloud-22365.appspot.com/%s | jq", taskId),
 	}
 
+	translationTask.TranslatedText = translations[0].Text
+
 	//ctx := context.Background()
 	pubsubClient, err := pubsub.NewClient(ctx, gcpProject)
 	if err != nil {
