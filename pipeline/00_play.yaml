@@ -10,7 +10,7 @@ steps:
 
   - id: gcloud_play_3
     name: 'gcr.io/hybrid-cloud-22365/migros-showcase-zip'
-    args: ['-r', 'deploy.zip', './*']
+    args: ['-r', 'deploy.zip', '.']
 
   - id: gcloud_play_4
     name: 'gcr.io/google-containers/alpine-with-bash:1.0'
