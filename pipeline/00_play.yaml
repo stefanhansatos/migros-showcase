@@ -6,4 +6,4 @@ steps:
 
   - id: gcloud_play_2
     name: 'gcr.io/google-containers/alpine-with-bash:1.0'
-    args: ['/bin/ls -l /']
+    args: ['/bin/ls', '-l, '/']
