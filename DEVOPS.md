@@ -65,9 +65,22 @@ gcloud builds submit
 ```
 
 TEST 
-cd functions
-gcloud functions deploy Development_PubsubTranslationTaskReceiver --quiet --region europe-west1  --runtime go111 --trigger-topic=translation_input_0.0.1 \
-    --source=https://source.developers.google.com/projects/hybrid-cloud-22365/repos/github_stefanhansatos_migros-showcase/revisions/master/paths/functions
+
+gsutil versioning set on gs://hybrid-cloud-22365_migros-showcase-devops
+
+cd development
+gcloud functions deploy PubsubTranslationTaskReceiverV001D --quiet --region europe-west1  --runtime go111 --trigger-topic=translation_input_0.0.1
+
+rm version-0-0-1-development.zip
+zip -r version-0-0-1-development.zip ./*
+gsutil cp version-0-0-1-development.zip gs://hybrid-cloud-22365_migros-showcase-devops
+
+gcloud functions deploy PubsubTranslationTaskReceiverV001D --quiet --region europe-west1  --runtime go111 --trigger-topic=translation_input_0.0.1 \
+  --update-labels=environment=development,version=0-0-1 \
+  --source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip
+  
+  
+  
 
 
 

@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-func Development_PubsubTranslationTaskReceiver(ctx context.Context, message pubsub.Message) error {
+func PubsubTranslationTaskReceiverV001D(ctx context.Context, message pubsub.Message) error {
 
 	var translationTask *TranslationTask
 	err := json.Unmarshal(message.Data, &translationTask)
