@@ -1,4 +1,9 @@
 steps:
+  - - id: go_version
+      name: 'gcr.io/cloud-builders/go'
+      args: ['version']
+      env: ['PROJECT_ROOT=webserver-demo']
+
   - id: gcloud_deploy_http_frontend
     name: 'gcr.io/cloud-builders/gcloud'
     args: ['functions', 'deploy', 'Translation', '--region=europe-west1', '--entry-point=TranslationHTTP',

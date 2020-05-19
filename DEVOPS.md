@@ -64,6 +64,12 @@ curl -X POST "https://europe-west1-hybrid-cloud-22365.cloudfunctions.net/transla
 gcloud builds submit 
 ```
 
+TEST 
+cd functions
+gcloud functions deploy Development_PubsubTranslationTaskReceiver --quiet --region europe-west1  --runtime go111 --trigger-topic=translation_input_0.0.1 \
+    --source=https://source.developers.google.com/projects/hybrid-cloud-22365/repos/github_stefanhansatos_migros-showcase/revisions/master/paths/functions
+
+
 
 gcloud alpha functions add-iam-policy-binding translation --region=europe-west1 --member=allUsers --role=roles/cloudfunctions.invoker
 
