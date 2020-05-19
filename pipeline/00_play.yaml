@@ -1,0 +1,4 @@
+steps:
+  -id: gcloud_deploy_http_frontend
+   name: 'gcr.io/google-containers/alpine-with-bash:1.0'
+   args: 'ls /workspace'

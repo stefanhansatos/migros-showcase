@@ -66,6 +66,7 @@ gcloud builds submit
 
 TEST 
 
+```bash
 gsutil versioning set on gs://hybrid-cloud-22365_migros-showcase-devops
 
 cd development
@@ -81,10 +82,23 @@ gcloud functions deploy PubsubTranslationTaskReceiverV001D --quiet --region euro
   
 gcloud alpha builds triggers run cf-http-frontend --branch=master 
   
+```
 
 
+---
 
-gcloud alpha functions add-iam-policy-binding translation --region=europe-west1 --member=allUsers --role=roles/cloudfunctions.invoker
+```bash
+cd functions
+
+gcloud functions deploy PubsubTranslationTaskConverter --quiet --region europe-west1 --runtime go111 --trigger-topic=translation_input_0.0.1 \
+  --service-account=smbe-22365@hybrid-cloud-22365.iam.gserviceaccount.com
+  
+curl -X POST "https://europe-west1-hybrid-cloud-22365.cloudfunctions.net/translation" \
+  -d '{ "clientVersion": "0.0.1", "clientId": "beab10c6-deee-4843-9757-719566214526", "text": "Today is Tuesday", "sourceLanguage": "en",  "targetLanguage": "de"}'
+  
+```
+
+docker pull busybox
 
 
 

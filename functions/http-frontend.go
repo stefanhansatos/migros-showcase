@@ -58,7 +58,7 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 		Text:           request.Text,
 		SourceLanguage: request.SourceLanguage,
 		TargetLanguage: request.TargetLanguage,
-		TranslatedText: "",
+		TranslatedText: "none",
 		TraceInfo:      traceInfoSlice,
 	}
 
