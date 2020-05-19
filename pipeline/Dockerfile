@@ -1,5 +1,5 @@
 FROM gcr.io/hybrid-cloud-22365/migros-showcase
 
-WORKDIR /workspace/functions
+CMD ['cd', '/workspace/functions']
 
 ENTRYPOINT ["zip"]
