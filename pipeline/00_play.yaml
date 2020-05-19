@@ -1,5 +1,9 @@
 steps:
 
-  - id: gcloud_play
+  - id: gcloud_play_1
     name: 'gcr.io/google-containers/alpine-with-bash:1.0'
-    args: ['ls /workspace']
+    args: ['pwd']
+
+  - id: gcloud_play_2
+    name: 'gcr.io/google-containers/alpine-with-bash:1.0'
+    args: ['ls -l /']
