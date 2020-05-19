@@ -79,7 +79,7 @@ gcloud functions deploy PubsubTranslationTaskReceiverV001D --quiet --region euro
   --update-labels=environment=development,version=0-0-1 \
   --source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip
   
-  
+gcloud alpha builds triggers run cf-http-frontend --branch=master 
   
 
 
