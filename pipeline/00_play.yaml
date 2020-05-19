@@ -2,4 +2,4 @@ steps:
 
   - id: gcloud_play
     name: 'gcr.io/google-containers/alpine-with-bash:1.0'
-    args: 'ls /workspace'
+    args: ['ls /workspace']
