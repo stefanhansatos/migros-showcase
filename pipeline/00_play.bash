@@ -1,23 +1,33 @@
 #!/usr/bin/env bash
 
-mv /workspace/vendor /workspace/functions || exit 1
-
 cd /workspace/pipeline
 
 filename=$(basename $0)
 filebasename=${filename%.*}
 
 versionfilename=$(ls ${filebasename}.version*)
-echo "versionfilename: $versionfilename"
 version=$(echo $versionfilename | cut -d . -f 2)
-echo "version: $version"
+
+echo "
+#####################################################################
+#
+#   Retrieved deployment version $version
+#
+#####################################################################
+"
 
 cd /workspace/functions
-pwd
 sourceversion=$(find . -name "$version")
-echo "sourceversion: $sourceversion"
 sourcedir=$(dirname $sourceversion)
-echo "sourcedir: $sourcedir"
+
+echo "
+#####################################################################
+#
+#   Move Go's vendor directory to /workspace/functions/${sourcedir}
+#
+#####################################################################
+"
+mv /workspace/vendor /workspace/functions || exit 1
 
 echo "
 #####################################################################
@@ -26,7 +36,6 @@ echo "
 #
 #####################################################################
 "
-
 cd ./$sourcedir
 rm ${version}.zip 2>/dev/null
 zip -r ${version}.zip ./* || exit 1
