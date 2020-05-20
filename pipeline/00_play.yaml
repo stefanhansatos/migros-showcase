@@ -2,6 +2,8 @@ steps:
   - id: play-00
     name: 'gcr.io/cloud-builders/go'
     args: ['mod', 'init']
+    env:
+      - 'PROJECT_ROOT=/workspace/functions'
 
   - id: play-01
     name: 'gcr.io/hybrid-cloud-22365/migros-showcase-bash'
