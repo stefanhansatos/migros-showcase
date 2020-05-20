@@ -1,18 +1,8 @@
 steps:
 
-  - id: verify_script
+  - id: deploy-verify-01
     name: 'gcr.io/hybrid-cloud-22365/migros-showcase-bash'
     args: ['pipeline/01_http-frontend.bash']
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=$_CLUSTER_ZONE'
-      - 'CLOUDSDK_COMPUTE_REGION=$_CLUSTER_REGION'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME'
-      - 'CLOUDSDK_COMPUTE_NETWORK=$_NETWORK'
-      - 'CLOUDSDK_COMPUTE_SUBNET=$_SUBNET'
-      - 'PROJECT_ID=$_PROJECTID'
-      - 'APPLICATION_IP=$_APP_ADDR'
-      - 'REPO_NAME=$REPO_NAME'
-      - 'BUILD_ID=$BUILD_ID'
 
   - id: gsutil_cp_zip_file
     name: 'gcr.io/cloud-builders/gsutil'

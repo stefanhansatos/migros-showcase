@@ -1,9 +1,4 @@
 steps:
-  - id: play-01
-    name: 'gcr.io/hybrid-cloud-22365/migros-showcase-bash'
-    args: ['pipeline/01_play.bash']
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=$_CLUSTER_ZONE'
 
   - id: go-prepare-01
     name: 'gcr.io/cloud-builders/go'
@@ -20,8 +15,6 @@ steps:
       - 'GOPATH=/go'
       - 'GOPROXY=https://proxy.golang.org'
 
-  - id: deploy-prepare01
+  - id: deploy-prepare-01
     name: 'gcr.io/hybrid-cloud-22365/migros-showcase-bash'
-    args: ['pipeline/00_play.bash']
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=$_CLUSTER_ZONE'
+    args: ['pipeline/00_prepare-deployment.bash']
