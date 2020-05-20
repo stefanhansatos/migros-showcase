@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-find /workspace
+find /workspace -ls
 
 cd /workspace/pipeline
 
