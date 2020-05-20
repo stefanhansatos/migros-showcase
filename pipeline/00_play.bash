@@ -27,5 +27,7 @@ echo "sourcedir: $sourcedir"
 
 cd ./$sourcedir
 pwd
-rm ${$version}.zip 2>/dev/null
+ls -l
+ls -l ${$version}.zip
+rm ${$version}.zip || echo
 zip -r ${$version}.zip ./* || exit 1
