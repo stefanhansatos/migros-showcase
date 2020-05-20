@@ -3,13 +3,15 @@ steps:
     name: 'gcr.io/cloud-builders/go'
     args: ['mod', 'init']
     env:
-      - 'PROJECT_ROOT=/workspace/functions'
+      - 'GOPATH=/workspace/functions'
 
   - id: go-01
     name: 'gcr.io/cloud-builders/go'
     args: ['mod', 'vendor']
     env:
-      - 'PROJECT_ROOT=/workspace/functions'
+      - 'GOPATH=/workspace/functions'
+      - 'GO111MODULE=on'
+      - 'GOPROXY=https://proxy.golang.org'
 
   - id: play-01
     name: 'gcr.io/hybrid-cloud-22365/migros-showcase-bash'
