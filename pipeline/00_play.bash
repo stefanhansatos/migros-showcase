@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+find /workspace
+
 cd /workspace/pipeline
 
 filename=$(basename $0)
