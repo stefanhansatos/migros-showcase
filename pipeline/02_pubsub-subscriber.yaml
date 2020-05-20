@@ -1,0 +1,24 @@
+steps:
+
+  - id: deploy-verify-01
+    name: 'gcr.io/hybrid-cloud-22365/migros-showcase-bash'
+    args: ['pipeline/02_pubsub-subscriber.bash']
+
+  - id: enironment-verify-01
+    name: 'gcr.io/cloud-builders/gcloud'
+    args: ['gcloud', 'pubsub', 'topics', 'describe',
+           'translation_input_0.0.1'
+    ]
+
+  - id: gsutil_cp_zip_file
+    name: 'gcr.io/cloud-builders/gsutil'
+    args: ['cp', 'gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip',
+           '/workspace/functions/version-0-0-1-development.zip'
+    ]
+
+  - id: deploy_pubsub_subscriber_PubsubTranslationTaskReceiver
+    name: 'gcr.io/cloud-builders/gcloud'
+    args: ['functions', 'deploy', 'PubsubTranslationTaskReceiver', '--region=europe-west1', '--quiet',
+           '--runtime=go111', "--trigger-topic=translation_input_0.0.1",
+           '--source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip'
+    ]

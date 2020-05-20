@@ -4,9 +4,17 @@ steps:
     name: 'gcr.io/hybrid-cloud-22365/migros-showcase-bash'
     args: ['pipeline/01_http-frontend.bash']
 
+  - id: enironment-verify-01
+    name: 'gcr.io/cloud-builders/gcloud'
+    args: ['gcloud', 'pubsub', 'topics', 'describe',
+           'translation_input_0.0.1'
+    ]
+
   - id: gsutil_cp_zip_file
     name: 'gcr.io/cloud-builders/gsutil'
-    args: ['cp', '/workspace/functions/version-0-0-1-development.zip', 'gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip']
+    args: ['cp', 'gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip',
+           '/workspace/functions/version-0-0-1-development.zip'
+    ]
 
   - id: deploy_http_frontend_TranslationHTTP
     name: 'gcr.io/cloud-builders/gcloud'
@@ -17,13 +25,6 @@ steps:
            '--allow-unauthenticated',
            '--service-account=smbe-22365@hybrid-cloud-22365.iam.gserviceaccount.com'
     ]
-
-#  gcloud functions deploy Translation --region europe-west1  --entry-point TranslationHTTP --runtime go111 --trigger-http \
-#  --source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip \
-#  --set-env-vars=PUBSUB_TOPIC_TRUNC=translation_input \
-#  --allow-unauthenticated \
-#  --service-account=smbe-22365@hybrid-cloud-22365.iam.gserviceaccount.com
-
 
   - id: deploy_pubsub_subscriber_PubsubTranslationTaskReceiver
     name: 'gcr.io/cloud-builders/gcloud'
