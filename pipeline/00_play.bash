@@ -6,6 +6,8 @@ env
 
 ls -l /workspace/pipeline
 
+cd /workspace/pipeline
+
 filename=$(basename $0)
 echo $filename
 filebasename=${filename%.*}
@@ -18,3 +20,11 @@ echo $versionfilename
 version=$(echo $versionfilename | cut -d . -f 2)
 echo $version
 
+cd /workspace/functions
+
+echo "zip -r ${$version}.zip ./*"
+
+zip -r ${$version}.zip ./*
+
+pwd
+ls -l
