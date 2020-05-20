@@ -19,7 +19,7 @@ steps:
       - 'GO111MODULE=on'
       - 'GOPROXY=https://proxy.golang.org'
 
-  - id: play-01
+  - id: play-00
     name: 'gcr.io/hybrid-cloud-22365/migros-showcase-bash'
     args: ['pipeline/00_play.bash']
     env:
