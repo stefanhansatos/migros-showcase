@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-find /workspace -ls
+mv /workspace/vendor /workspace/functions || exit 1
 
 cd /workspace/pipeline
 
