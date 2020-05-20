@@ -1,9 +1,5 @@
 steps:
 
-#  - id: deploy-verify-01
-#    name: 'gcr.io/hybrid-cloud-22365/migros-showcase-bash'
-#    args: ['pipeline/01_http-frontend.bash']
-
   - id: gsutil_cp_zip_file
     name: 'gcr.io/cloud-builders/gsutil'
     args: ['cp', 'gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip',
@@ -34,11 +30,11 @@ steps:
 #    ]
 #  gcloud functions deploy PubsubTranslationTaskReceiver --quiet --region europe-west1  --runtime go111 --trigger-topic=translation_input_0.0.1 \
 #  --source=https://source.developers.google.com/projects/hybrid-cloud-22365/repos/github_stefanhansatos_migros-showcase/revisions/master/paths/functions
-
-  - id: deploy_pubsub_subscriber_PubsubTranslationTaskConverter
-    name: 'gcr.io/cloud-builders/gcloud'
-    args: ['functions', 'deploy', 'PubsubTranslationTaskConverter', '--region=europe-west1', '--quiet',
-           '--runtime=go111', "--trigger-topic=translation_input_0.0.1",
-           '--source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip',
-           '--service-account=smbe-22365@hybrid-cloud-22365.iam.gserviceaccount.com'
-    ]
+#
+#  - id: deploy_pubsub_subscriber_PubsubTranslationTaskConverter
+#    name: 'gcr.io/cloud-builders/gcloud'
+#    args: ['functions', 'deploy', 'PubsubTranslationTaskConverter', '--region=europe-west1', '--quiet',
+#           '--runtime=go111', "--trigger-topic=translation_input_0.0.1",
+#           '--source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip',
+#           '--service-account=smbe-22365@hybrid-cloud-22365.iam.gserviceaccount.com'
+#    ]

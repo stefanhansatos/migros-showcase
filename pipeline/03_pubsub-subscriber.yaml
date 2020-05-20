@@ -12,9 +12,10 @@ steps:
            'translation_input_0.0.1'
     ]
 
-  - id: deploy_pubsub_subscriber_PubsubTranslationTaskReceiver
+  - id: deploy_pubsub_subscriber_PubsubTranslationTaskConverter
     name: 'gcr.io/cloud-builders/gcloud'
-    args: ['functions', 'deploy', 'PubsubTranslationTaskReceiver', '--region=europe-west1', '--quiet',
+    args: ['functions', 'deploy', 'PubsubTranslationTaskConverter', '--region=europe-west1', '--quiet',
            '--runtime=go111', "--trigger-topic=translation_input_0.0.1",
-           '--source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip'
+           '--source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip',
+           '--service-account=smbe-22365@hybrid-cloud-22365.iam.gserviceaccount.com'
     ]
