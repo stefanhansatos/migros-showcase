@@ -1,3 +1,5 @@
-FROM gcr.io/hybrid-cloud-22365/migros-showcase
+FROM gcr.io/google-containers/ubuntu-slim:0.14
 
-CMD ['cd', '/workspace/functions', 'pwd']
+RUN apt-get update && apt-get install -y zip
+
+ENTRYPOINT ["bash"]

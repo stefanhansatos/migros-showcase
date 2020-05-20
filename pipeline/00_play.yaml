@@ -1,5 +1,11 @@
 steps:
 
+  - id: verify_script
+    name: 'gcr.io/hybrid-cloud-22365/migros-showcase-bash'
+    args: ['pipeline/00_play.bash']
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=$_CLUSTER_ZONE'
+
   - id: gcloud_play_1
     name: 'gcr.io/google-containers/alpine-with-bash:1.0'
     args: ['pwd']
