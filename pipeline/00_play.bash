@@ -17,13 +17,14 @@ echo "sourceversion: $sourceversion"
 sourcedir=$(dirname $sourceversion)
 echo "sourcedir: $sourcedir"
 
-echo "
+#echo "
 #####################################################################
 #
 #   Zip content from /workspace/functions/${sourcedir} to ${$version}.zip
 #
 #####################################################################
-"
+#"
+
 cd ./$sourcedir
 pwd
 rm ${$version}.zip 2>/dev/null
