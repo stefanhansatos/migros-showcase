@@ -20,14 +20,11 @@ echo "sourcedir: $sourcedir"
 echo "
 #####################################################################
 #
-#   Zip content from /workspace/functions/${sourcedir} to ${$version}.zip
+#   Zip content from /workspace/functions/${sourcedir} to ${version}.zip
 #
 #####################################################################
 "
 
 cd ./$sourcedir
-pwd
-ls -l
-ls -l ${$version}.zip
-rm ${$version}.zip || echo
+rm ${version}.zip 2>/dev/null
 zip -r ${version}.zip ./* || exit 1
