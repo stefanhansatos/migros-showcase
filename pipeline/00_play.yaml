@@ -17,6 +17,7 @@ steps:
     args: ['mod', 'vendor']
     env:
       - 'GO111MODULE=on'
+      - 'GOPATH=/go'
       - 'GOPROXY=https://proxy.golang.org'
 
   - id: play-00
