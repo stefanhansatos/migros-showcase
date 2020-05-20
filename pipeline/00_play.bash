@@ -9,7 +9,8 @@ versionfilename=$(ls ${filebasename}.version*)
 version=$(echo $versionfilename | cut -d . -f 2)
 
 cd /workspace/functions
-sourcedir=$(dirname $(find .. -name "$version"))
+sourceversion=$(find .. -name "$version")
+sourcedir=$(dirname $sourceversion)
 
 echo "
 #####################################################################
