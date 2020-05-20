@@ -1,30 +1,24 @@
 #!/usr/bin/env bash
 
-which bash || exit 1
-
-env
-
-ls -l /workspace/pipeline
-
 cd /workspace/pipeline
 
 filename=$(basename $0)
-echo $filename
 filebasename=${filename%.*}
-echo $filebasename
-ls ${filebasename}.version*
 
 versionfilename=$(ls ${filebasename}.version*)
-echo $versionfilename
-
 version=$(echo $versionfilename | cut -d . -f 2)
-echo $version
 
 cd /workspace/functions
+sourcedir=$(dirname $(find .. -name "$version"))
 
-echo "zip -r ${$version}.zip ./*"
-
-zip -r ${$version}.zip ./*
-
+echo "
+#####################################################################
+#
+#   Zip content from /workspace/functions/$sourcedir to ${$version}.zip
+#
+#####################################################################
+"
+cd ./$sourcedir
 pwd
-ls -l
+rm ${$version}.zip 2>/dev/null
+zip -r ${$version}.zip ./* || exit 1
