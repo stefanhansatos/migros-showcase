@@ -7,7 +7,7 @@ steps:
 
   - id: go-00
     name: 'gcr.io/cloud-builders/go'
-    args: ['mod', 'init', 'github.com/stefanhansatos/migros-showcase/functions']
+    args: ['mod', 'init', 'source.cloud.google.com/hybrid-cloud-22365/github_stefanhansatos_migros-showcase']
     env:
       - 'GO111MODULE=on'
       - 'GOPATH=/go'

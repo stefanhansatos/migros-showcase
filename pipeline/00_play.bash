@@ -38,4 +38,4 @@ echo "
 "
 cd ./$sourcedir
 rm ${version}.zip 2>/dev/null
-zip -r ${version}.zip ./* || exit 1
+zip -qr ${version}.zip ./* || exit 1
