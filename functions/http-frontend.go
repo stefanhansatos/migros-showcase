@@ -84,7 +84,7 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if ds[0][0].Confidence < 0.9 {
-		http.Error(w, fmt.Sprintf("source language detection's confidence for %q is below 90%\n", ds[0][0].Language.String()),
+		http.Error(w, fmt.Sprintf("source language detection's confidence for %q is below 90%s\n", ds[0][0].Language.String(), "%"),
 			http.StatusInternalServerError)
 		return
 	}

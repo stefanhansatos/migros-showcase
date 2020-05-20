@@ -1,0 +1,57 @@
+gcloud functions deploy Translation --region europe-west1  --entry-point TranslationHTTP --runtime go111 --trigger-http \
+  --source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip \
+  --set-env-vars=PUBSUB_TOPIC_TRUNC=translation_input \
+  --allow-unauthenticated \
+  --service-account=smbe-22365@hybrid-cloud-22365.iam.gserviceaccount.com
+
+curl -X POST "https://europe-west1-hybrid-cloud-22365.cloudfunctions.net/Translation" \
+  -d '{ "clientVersion": "0.0.1", "clientId": "beab10c6-deee-4843-9757-719566214526", "text": "Today is Wednesday", "sourceLanguage": "en",  "targetLanguage": "fr"}'
+
+
+gsutil ls -la gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip
+   4076712  2020-05-19T06:29:44Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589869784446862  metageneration=1
+   4076712  2020-05-19T15:17:17Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589901437638683  metageneration=1
+   8129105  2020-05-19T15:32:54Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589902374052557  metageneration=1
+   4013911  2020-05-19T15:45:41Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589903141817779  metageneration=1
+   4013911  2020-05-19T15:56:57Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589903817437836  metageneration=1
+   4013911  2020-05-19T16:15:10Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589904910514380  metageneration=1
+   4013911  2020-05-20T08:22:24Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589962944816595  metageneration=1
+TOTAL: 7 objects, 32338173 bytes (30.84 MiB)
+
+
+gsutil cp  /private/tmp/version-0-0-1-development.zip gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip
+Copying file:///private/tmp/version-0-0-1-development.zip [Content-Type=application/zip]...
+/ [1 files][  3.8 MiB/  3.8 MiB]
+Operation completed over 1 objects/3.8 MiB.
+
+ gsutil ls -la gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip
+   4076712  2020-05-19T06:29:44Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589869784446862  metageneration=1
+   4076712  2020-05-19T15:17:17Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589901437638683  metageneration=1
+   8129105  2020-05-19T15:32:54Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589902374052557  metageneration=1
+   4013911  2020-05-19T15:45:41Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589903141817779  metageneration=1
+   4013911  2020-05-19T15:56:57Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589903817437836  metageneration=1
+   4013911  2020-05-19T16:15:10Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589904910514380  metageneration=1
+   4013911  2020-05-20T08:22:24Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589962944816595  metageneration=1
+
+   4013911  2020-05-20T13:09:05Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589980145049569  metageneration=1
+   4013911  2020-05-20T13:17:48Z  gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip#1589980668012997  metageneration=1
+TOTAL: 9 objects, 40365995 bytes (38.5 MiB)
+
+
+retry last successful trigger from yesterday : Successful: 5ba321f9
+                Started on May 19, 2020, 6:15:00 PM
+
+Successful: 6065a394
+
+curl -X POST "https://europe-west1-hybrid-cloud-22365.cloudfunctions.net/Translation" \
+  -d '{ "clientVersion": "0.0.1", "clientId": "beab10c6-deee-4843-9757-719566214526", "text": "Today is Wednesday", "sourceLanguage": "en",  "targetLanguage": "fr"}'
+
+check log
+resource.type="cloud_function" resource.labels.function_name="Translation" resource.labels.region="europe-west1"
+OK
+
+
+
+
+
+  --service-account=smbe-22365@hybrid-cloud-22365.iam.gserviceaccount.com
