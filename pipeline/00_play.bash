@@ -6,16 +6,21 @@ filename=$(basename $0)
 filebasename=${filename%.*}
 
 versionfilename=$(ls ${filebasename}.version*)
+echo "versionfilename: $versionfilename"
 version=$(echo $versionfilename | cut -d . -f 2)
+echo "version: $version"
 
 cd /workspace/functions
-sourceversion=$(find .. -name "$version")
+pwd
+sourceversion=$(find . -name "$version")
+echo "sourceversion: $sourceversion"
 sourcedir=$(dirname $sourceversion)
+echo "sourcedir: $sourcedir"
 
 echo "
 #####################################################################
 #
-#   Zip content from /workspace/functions/$sourcedir to ${$version}.zip
+#   Zip content from /workspace/functions/${sourcedir} to ${$version}.zip
 #
 #####################################################################
 "
