@@ -1,41 +1,54 @@
 package functions
 
 import (
+	"context"
 	"encoding/json"
+	"firebase.google.com/go"
+	"fmt"
+	"google.golang.org/api/option"
 	"io/ioutil"
 	"net/http"
 	"strings"
 	"testing"
+	"time"
 )
 
-//serviceUrl := os.Getenv("BOOTSTRAP_DATA_SERVER")
-//if serviceUrl != "https://europe-west1-bootstrap-data-cloudfunctions.cloudfunctions.net" {
-//	t.Errorf("BOOTSTRAP_DATA_SERVER environment variable expected %q set %q",
-//		"https://europe-west1-bootstrap-data-cloudfunctions.cloudfunctions.net", serviceUrl)
-//}
-
-func TestHttpFrontendAvailable(t *testing.T) {
+func TestE2eStorage(t *testing.T) {
 
 	serviceUrl := "https://europe-west1-hybrid-cloud-22365.cloudfunctions.net"
 
-	// Send ping request to service
-	res, err := http.Post(serviceUrl+"/Translation",
-		"application/x-www-form-urlencoded",
-		strings.NewReader(""))
-	if err != nil {
-		t.Errorf("failed to send POST request to %q: %v\n", serviceUrl, err)
-		return
+	//bucketUrl := os.Getenv("FIREBASE_BUCKET_URL")
+	//if bucketUrl == "" {
+	//	fmt.Errorf("FIREBASE_BUCKET_URL not set\n")
+	//}
+	//fmt.Printf("FIREBASE_BUCKET_URL: %q\n", bucketUrl)
+
+	bucketUrl := "hybrid-cloud-22365.appspot.com"
+
+	config := &firebase.Config{
+		StorageBucket: bucketUrl,
 	}
 
-	err = res.Body.Close()
+	storageCredentialFile := "hybrid-cloud-22365-firebase-storage-22365.json"
+
+	opt := option.WithCredentialsFile(storageCredentialFile)
+	app, err := firebase.NewApp(context.Background(), config, opt)
 	if err != nil {
-		t.Errorf("cannot close response body\n")
+		t.Fatalf("failed to create new firebase app: %v\n", err)
 	}
-}
 
-func TestHttpFrontendPostData(t *testing.T) {
+	ctx := context.Background()
+	client, err := app.Storage(ctx)
+	if err != nil {
+		t.Fatalf("failed to return storage instance: %v\n", err)
+	}
+	bucket, err := client.DefaultBucket()
+	if err != nil {
+		t.Fatalf("failed to return default bucket handle: %v\n", err)
+	}
 
-	serviceUrl := "https://europe-west1-hybrid-cloud-22365.cloudfunctions.net"
+	ctx, cancel := context.WithTimeout(ctx, time.Second*50)
+	defer cancel()
 
 	var testCases map[string]struct {
 		request              Request
@@ -64,36 +77,6 @@ func TestHttpFrontendPostData(t *testing.T) {
 			},
 			expectedError: false,
 		},
-		"Unknown source language": {
-			request: Request{
-				ClientVersion:  "0.0.1",
-				ClientId:       "beab10c6-deee-4843-9757-719566214526",
-				Text:           "Today is ascension of Jesus",
-				SourceLanguage: "xx",
-				TargetLanguage: "de",
-			},
-			response: Response{
-				TranslatedText: "Heute ist die Himmelfahrt Jesu",
-			},
-			expectedError:        true,
-			expectedStatusCode:   500,
-			expectedStatusPrefix: "failed to translate text",
-		},
-		"Unknown target language": {
-			request: Request{
-				ClientVersion:  "0.0.1",
-				ClientId:       "beab10c6-deee-4843-9757-719566214526",
-				Text:           "Today is ascension of Jesus",
-				SourceLanguage: "en",
-				TargetLanguage: "xx",
-			},
-			response: Response{
-				TranslatedText: "Heute ist die Himmelfahrt Jesu",
-			},
-			expectedError:        true,
-			expectedStatusCode:   500,
-			expectedStatusPrefix: "failed to translate text",
-		},
 	}
 	for n, tc := range testCases {
 
@@ -120,8 +103,8 @@ func TestHttpFrontendPostData(t *testing.T) {
 
 			if tc.expectedError {
 
-				//fmt.Printf("Status: %v\n", res.Status)
-				//fmt.Printf("Body: %s\n", body)
+				fmt.Printf("Status: %v\n", res.Status)
+				fmt.Printf("Body: %s\n", body)
 
 				if res.StatusCode != tc.expectedStatusCode {
 					t.Errorf("status code is %v and not as expected %v\n", res.StatusCode, tc.expectedStatusCode)
@@ -140,6 +123,8 @@ func TestHttpFrontendPostData(t *testing.T) {
 					return
 				}
 
+				fmt.Printf("TaskId: %s\n", response.TaskId)
+
 				if response.TaskId == "" {
 					t.Errorf("TaskId in response is empty\n")
 				}
@@ -155,6 +140,31 @@ func TestHttpFrontendPostData(t *testing.T) {
 				if response.LoadCommand == "" {
 					t.Errorf("LoadCommand in response is empty\n")
 				}
+
+				//response.TaskId = "d09870fc-8e3e-4ec6-9808-501155e94915"
+				time.Sleep(time.Second * 2)
+
+				var translationTaskJson []byte
+				rc, err := bucket.Object(response.TaskId).NewReader(ctx)
+				if err != nil {
+					t.Errorf("failed to create reader %q\n", err)
+					return
+				} else {
+					_, err = rc.Read(translationTaskJson)
+					if err != nil {
+						t.Errorf("failed to read %q\n", err)
+						return
+					}
+				}
+
+				var translationTask *TranslationTask
+				err = json.Unmarshal(translationTaskJson, &translationTask)
+				if err != nil {
+					t.Errorf("failed to unmarshal translationTask: %v\n", err)
+					return
+				}
+				fmt.Printf("translationTask.TaskId: %v\n", translationTask.TaskId)
+
 			}
 
 			err = res.Body.Close()
