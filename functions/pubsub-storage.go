@@ -46,7 +46,7 @@ func PubsubStoreTranslationTask(ctx context.Context, message pubsub.Message) err
 	ctx, cancel := context.WithTimeout(ctx, time.Second*50)
 	defer cancel()
 
-	wc := bucket.Object(translationTask.TaskId).NewWriter(ctx)
+	wc := bucket.Object(translationTask.ClientVersion + "/" + translationTask.TaskId).NewWriter(ctx)
 	_, err = wc.Write(message.Data)
 	if err != nil {
 		return fmt.Errorf("failed to write to bucket: %v\n", err)

@@ -99,7 +99,7 @@ func TestE2eStorage(t *testing.T) {
 			}
 
 			body, err := ioutil.ReadAll(res.Body)
-			//fmt.Printf("body: %v\n", string(body))
+			fmt.Printf("body: %v\n", string(body))
 
 			if tc.expectedError {
 
