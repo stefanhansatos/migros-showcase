@@ -18,3 +18,9 @@ steps:
   - id: deploy-prepare-01
     name: 'gcr.io/hybrid-cloud-22365/migros-showcase-bash'
     args: ['pipeline/00_prepare-deployment.bash']
+
+  - id: gsutil_cp_zip_file
+    name: 'gcr.io/cloud-builders/gsutil'
+    args: ['cp', '/workspace/functions/version-0-0-1-development.zip',
+           'gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip'
+    ]
