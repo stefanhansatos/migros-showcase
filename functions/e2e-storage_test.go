@@ -145,7 +145,7 @@ func TestE2eStorage(t *testing.T) {
 				time.Sleep(time.Second * 2)
 
 				var translationTaskJson []byte
-				rc, err := bucket.Object(response.TaskId).NewReader(ctx)
+				rc, err := bucket.Object(tc.request.ClientVersion + "/" + response.TaskId).NewReader(ctx)
 				if err != nil {
 					t.Errorf("failed to create reader %q\n", err)
 					return
