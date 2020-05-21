@@ -4,7 +4,7 @@ import (
 	"cloud.google.com/go/pubsub"
 	"context"
 	"encoding/json"
-	"firebase.google.com/go"
+	firebase "firebase.google.com/go"
 	"fmt"
 	"time"
 )
