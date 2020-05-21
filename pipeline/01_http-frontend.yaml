@@ -28,7 +28,7 @@ steps:
     env:
       - 'GO111MODULE=on'
       - 'GOPATH=/go'
-      -
+
   - id: test_http_frontend_TranslationHTTP
     name: 'gcr.io/cloud-builders/go'
     args: ['test', '-v', '-run', 'TestHttpFrontend']
