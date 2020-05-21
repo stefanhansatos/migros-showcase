@@ -157,7 +157,10 @@ func TestE2eStorage(t *testing.T) {
 					}
 				}
 
-				var translationTask *TranslationTask
+				fmt.Printf("translationTaskJson: %s\n", translationTaskJson)
+				fmt.Printf("translationTaskJson: %s\n", &translationTaskJson)
+
+				var translationTask TranslationTask
 				err = json.Unmarshal(translationTaskJson, &translationTask)
 				if err != nil {
 					t.Errorf("failed to unmarshal translationTask: %v\n", err)
