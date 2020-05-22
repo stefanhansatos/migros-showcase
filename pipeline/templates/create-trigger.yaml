@@ -1,0 +1,11 @@
+steps:
+
+  - id: gcloud_create_trigger
+    name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'alpha'
+      - 'builds'
+      - 'triggers'
+      - 'create'
+      - 'FuncToBeExecuted'
+      - '--trigger-config=pipeline/templates/cf-trigger-template.json'

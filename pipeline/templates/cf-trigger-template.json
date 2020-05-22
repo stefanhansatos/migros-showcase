@@ -1,0 +1,18 @@
+{
+  "description": "FuncToBeExecuted",
+  "filename": "pipeline/FuncToBeExecuted.yaml",
+  "disabled": true,
+  "substitutions": {
+    "_CLUSTERNAME": "k8s-thw",
+    "_CLUSTERREGION": "europe-west1",
+    "_CLUSTERZONE": "europe-west1-b",
+    "_NETWORK": "k8s-thw-network",
+    "_PROJECTID": "hybrid-cloud-22365",
+    "_SUBNET": "k8s-thw-subnet-europe-west1"
+  },
+  "triggerTemplate": {
+    "branchName": "^master$",
+    "projectId": "hybrid-cloud-22365",
+    "repoName": "github_stefanhansatos_migros-showcase"
+  }
+}
