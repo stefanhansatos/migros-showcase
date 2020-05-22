@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"firebase.google.com/go"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -95,14 +96,14 @@ func TestE2eStorage(t *testing.T) {
 				return
 			}
 			//fmt.Printf("TaskId: %s\n", response.TaskId)
-			//fmt.Printf("gsutil cat gs://%s/%s/%s\n", bucketUrl, tc.request.ClientVersion, response.TaskId)
+			fmt.Printf("gsutil cat gs://%s/%s/%s\n", bucketUrl, tc.request.ClientVersion, response.TaskId)
 
 			err = res.Body.Close()
 			if err != nil {
 				t.Errorf("cannot close response body\n")
 			}
 
-			time.Sleep(time.Second * 2)
+			time.Sleep(time.Second * 25)
 
 			ctx, cancel := context.WithTimeout(ctx, time.Second*50)
 			defer cancel()
