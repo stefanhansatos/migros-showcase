@@ -1,14 +1,12 @@
 {
-  "description": "FuncToBeExecuted",
-  "filename": "pipeline/FuncToBeExecuted.yaml",
+  "description": "PubsubBqPutTranslationTask",
+  "filename": "pipeline/PubsubBqPutTranslationTask.yaml",
   "disabled": true,
   "substitutions": {
-    "_CLUSTERNAME": "k8s-thw",
-    "_CLUSTERREGION": "europe-west1",
-    "_CLUSTERZONE": "europe-west1-b",
-    "_NETWORK": "k8s-thw-network",
-    "_PROJECTID": "hybrid-cloud-22365",
-    "_SUBNET": "k8s-thw-subnet-europe-west1"
+    "_GCP_PROJECT": "hybrid-cloud-22365",
+    "_GCP_REGION": "europe-west1",
+    "_BQ_DATASET": "migros_showcase",
+    "_BQ_TABLE": "translations_v0_0_1"
   },
   "triggerTemplate": {
     "branchName": "^master$",
