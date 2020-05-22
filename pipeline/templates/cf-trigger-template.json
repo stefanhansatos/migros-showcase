@@ -1,4 +1,5 @@
 {
+  "name": "cf-pubsub-bq-put-translation-task",
   "description": "PubsubBqPutTranslationTask",
   "filename": "pipeline/PubsubBqPutTranslationTask.yaml",
   "disabled": true,
