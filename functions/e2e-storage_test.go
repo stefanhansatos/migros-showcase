@@ -96,7 +96,6 @@ func TestE2eStorage(t *testing.T) {
 				return
 			}
 			//fmt.Printf("TaskId: %s\n", response.TaskId)
-			fmt.Printf("gsutil cat gs://%s/%s/%s\n", bucketUrl, tc.request.ClientVersion, response.TaskId)
 
 			err = res.Body.Close()
 			if err != nil {
@@ -111,6 +110,7 @@ func TestE2eStorage(t *testing.T) {
 			var translationTaskJson []byte
 			rc, err := bucket.Object(tc.request.ClientVersion + "/" + response.TaskId).NewReader(ctx)
 			if err != nil {
+				fmt.Printf("gsutil cat gs://%s/%s/%s\n", bucketUrl, tc.request.ClientVersion, response.TaskId)
 				t.Errorf("failed to create reader %q\n", err)
 				return
 			} else {
@@ -120,7 +120,6 @@ func TestE2eStorage(t *testing.T) {
 					return
 				}
 			}
-			//fmt.Printf("translationTaskJson: %s\n", translationTaskJson)
 
 			err = rc.Close()
 			if err != nil {
@@ -130,6 +129,7 @@ func TestE2eStorage(t *testing.T) {
 			var translationTask TranslationTask
 			err = json.Unmarshal(translationTaskJson, &translationTask)
 			if err != nil {
+				fmt.Printf("translationTaskJson: %s\n", translationTaskJson)
 				t.Errorf("failed to unmarshal translationTask: %v\n", err)
 				return
 			}
