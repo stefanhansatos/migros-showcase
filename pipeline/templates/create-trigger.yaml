@@ -7,5 +7,5 @@ steps:
       - 'builds'
       - 'triggers'
       - 'create'
-      - 'PubsubBqPutTranslationTask'
+      - 'cf-pubsub-bq-put-translation-task'
       - '--trigger-config=pipeline/templates/cf-trigger-template.json'
