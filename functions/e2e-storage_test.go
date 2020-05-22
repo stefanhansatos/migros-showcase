@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"firebase.google.com/go"
-	"google.golang.org/api/option"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -28,10 +27,15 @@ func TestE2eStorage(t *testing.T) {
 		StorageBucket: bucketUrl,
 	}
 
-	storageCredentialFile := "hybrid-cloud-22365-firebase-storage-22365.json"
+	//storageCredentialFile := "hybrid-cloud-22365-firebase-storage-22365.json"
 
-	opt := option.WithCredentialsFile(storageCredentialFile)
-	app, err := firebase.NewApp(context.Background(), config, opt)
+	//opt := option.WithCredentialsFile(storageCredentialFile)
+	//app, err := firebase.NewApp(context.Background(), config, opt)
+	//if err != nil {
+	//	t.Fatalf("failed to create new firebase app: %v\n", err)
+	//}
+
+	app, err := firebase.NewApp(context.Background(), config)
 	if err != nil {
 		t.Fatalf("failed to create new firebase app: %v\n", err)
 	}
