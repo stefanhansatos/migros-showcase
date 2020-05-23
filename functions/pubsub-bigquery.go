@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-// PubsubBqPutTranslationTask stores the translation in BigQuery "smbe:translations"
+// PubsubBqPutTranslationTask stores the translation task in BigQuery
 func PubsubBqPutTranslationTask(ctx context.Context, message pubsub.Message) error {
 
 	var translationTask TranslationTask
