@@ -46,8 +46,8 @@ func PubsubBqPutTranslationTask(ctx context.Context, message pubsub.Message) err
 		translationTask,
 	}
 
-	smbeDataset := client.Dataset(bqDataset)
-	translationsTable := smbeDataset.Table(bqTable)
+	translationsDataset := client.Dataset(bqDataset)
+	translationsTable := translationsDataset.Table(bqTable)
 
 	inserter := translationsTable.Inserter()
 	err = inserter.Put(ctx, translationTasks)
