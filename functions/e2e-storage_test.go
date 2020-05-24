@@ -19,7 +19,7 @@ func TestE2eStorage(t *testing.T) {
 	//bucketUrl := os.Getenv("FIREBASE_BUCKET_URL")
 	//if bucketUrl == "" {
 	//	fmt.Errorf("FIREBASE_BUCKET_URL not set\n")
-	//}
+	//}translationTaskFromQuery
 	//fmt.Printf("FIREBASE_BUCKET_URL: %q\n", bucketUrl)
 
 	bucketUrl := "hybrid-cloud-22365.appspot.com"

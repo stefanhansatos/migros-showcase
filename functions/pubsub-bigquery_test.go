@@ -1,10 +1,12 @@
 package functions
 
 import (
+	"cloud.google.com/go/bigquery"
 	"context"
 	"encoding/json"
-	"firebase.google.com/go"
 	"fmt"
+	"google.golang.org/api/iterator"
+	"google.golang.org/api/option"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -16,40 +18,31 @@ func TestE2eBigQuery(t *testing.T) {
 
 	serviceUrl := "https://europe-west1-hybrid-cloud-22365.cloudfunctions.net"
 
-	//bucketUrl := os.Getenv("FIREBASE_BUCKET_URL")
-	//if bucketUrl == "" {
-	//	fmt.Errorf("FIREBASE_BUCKET_URL not set\n")
-	//}
-	//fmt.Printf("FIREBASE_BUCKET_URL: %q\n", bucketUrl)
+	//taskId := "17d55af7-ceb4-4f4a-bfa0-ddcffb46fcde"
+	//clientId := "beab10c6-deee-4843-9757-719566214526"
 
-	bucketUrl := "hybrid-cloud-22365.appspot.com"
-
-	config := &firebase.Config{
-		StorageBucket: bucketUrl,
-	}
-
-	//storageCredentialFile := "hybrid-cloud-22365-firebase-storage-22365.json"
-
-	//opt := option.WithCredentialsFile(storageCredentialFile)
-	//app, err := firebase.NewApp(context.Background(), config, opt)
-	//if err != nil {
-	//	t.Fatalf("failed to create new firebase app: %v\n", err)
-	//}
-
-	app, err := firebase.NewApp(context.Background(), config)
-	if err != nil {
-		t.Fatalf("failed to create new firebase app: %v\n", err)
-	}
+	projectID := "hybrid-cloud-22365"
+	bqDataset := "migros_showcase"
+	bqTable := "translations_v0_0_1"
 
 	ctx := context.Background()
-	client, err := app.Storage(ctx)
+
+	bqCredentialFile := "hybrid-cloud-22365-firebase-bq-22365.json"
+
+	opt := option.WithCredentialsFile(bqCredentialFile)
+
+	client, err := bigquery.NewClient(ctx, projectID, opt)
 	if err != nil {
-		t.Fatalf("failed to return storage instance: %v\n", err)
+		fmt.Printf("failed to create bigquery client: %v", err)
+		return
 	}
-	bucket, err := client.DefaultBucket()
-	if err != nil {
-		t.Fatalf("failed to return default bucket handle: %v\n", err)
-	}
+	defer func() {
+		err := client.Close()
+		if err != nil {
+			fmt.Printf("failed to close bigquery client: %v", err)
+			return
+		}
+	}()
 
 	var testCases map[string]struct {
 		request Request
@@ -57,7 +50,7 @@ func TestE2eBigQuery(t *testing.T) {
 	testCases = map[string]struct {
 		request Request
 	}{
-		"Storage v0.0.1": {
+		"BigQuery v0.0.1": {
 			request: Request{
 				ClientVersion:  "0.0.1",
 				ClientId:       "beab10c6-deee-4843-9757-719566214526",
@@ -102,60 +95,100 @@ func TestE2eBigQuery(t *testing.T) {
 				t.Errorf("cannot close response body\n")
 			}
 
+			queryStr := "SELECT ClientVersion,  " +
+				"ClientId, " +
+				"TaskId , " +
+				"Text, " +
+				"SourceLanguage, " +
+				"TargetLanguage, " +
+				"TranslatedText FROM `" +
+				projectID + "." + bqDataset + "." + bqTable + "` " +
+				"WHERE clientId = \"" + tc.request.ClientId + "\" " +
+				"AND taskId = \"" + response.TaskId + "\" " +
+				"LIMIT 1"
+
+			fmt.Printf("queryStr: %s\n", queryStr)
+
 			time.Sleep(time.Second * 25)
 
 			ctx, cancel := context.WithTimeout(ctx, time.Second*50)
 			defer cancel()
 
-			var translationTaskJson []byte
-			rc, err := bucket.Object(tc.request.ClientVersion + "/" + response.TaskId).NewReader(ctx)
+			q := client.Query(queryStr)
+
+			// Location must match that of the dataset(s) referenced in the query.
+			q.Location = "US"
+
+			// Run the query and print results when the query job is completed.
+			job, err := q.Run(ctx)
 			if err != nil {
-				fmt.Printf("gsutil cat gs://%s/%s/%s\n", bucketUrl, tc.request.ClientVersion, response.TaskId)
-				t.Errorf("failed to create reader %q\n", err)
+				fmt.Printf("failed q.Run(ctx): %v", err)
 				return
-			} else {
-				translationTaskJson, err = ioutil.ReadAll(rc)
+			}
+			status, err := job.Wait(ctx)
+			if err != nil {
+				fmt.Printf("failed job.Wait(ctx): %v", err)
+				return
+			}
+			if err := status.Err(); err != nil {
+				fmt.Printf("status.Err(): %v", err)
+				return
+			}
+			it, err := job.Read(ctx)
+
+			var queryResult struct {
+				ClientVersion  string `json:"clientVersion"`
+				ClientId       string `json:"clientId"`
+				TaskId         string `json:"taskId"`
+				Text           string `json:"text"`
+				SourceLanguage string `json:"sourceLanguage"`
+				TargetLanguage string `json:"targetLanguage"`
+				TranslatedText string `json:"translatedText"`
+			}
+
+			for {
+				err := it.Next(&queryResult)
+				if err == iterator.Done {
+					break
+				}
 				if err != nil {
-					t.Errorf("failed to read %q\n", err)
+					fmt.Printf("it.Next(&row): %v", err)
 					return
 				}
 			}
 
-			err = rc.Close()
-			if err != nil {
-				t.Errorf("cannot close reader\n")
-			}
+			fmt.Printf("queryResult: %v\n", queryResult)
 
-			var translationTask TranslationTask
-			err = json.Unmarshal(translationTaskJson, &translationTask)
+			var translationTaskJson []byte
+			err = json.Unmarshal(translationTaskJson, &queryResult)
 			if err != nil {
 				fmt.Printf("translationTaskJson: %s\n", translationTaskJson)
 				t.Errorf("failed to unmarshal translationTask: %v\n", err)
 				return
 			}
 
-			if translationTask.ClientVersion != tc.request.ClientVersion {
-				t.Errorf("ClientVersion is %q and not as expected %q\n", translationTask.ClientVersion, tc.request.ClientVersion)
+			if queryResult.ClientVersion != tc.request.ClientVersion {
+				t.Errorf("ClientVersion is %q and not as expected %q\n", queryResult.ClientVersion, tc.request.ClientVersion)
 			}
-			if translationTask.ClientId != tc.request.ClientId {
-				t.Errorf("ClientId is %q and not as expected %q\n", translationTask.ClientId, tc.request.ClientId)
+			if queryResult.ClientId != tc.request.ClientId {
+				t.Errorf("ClientId is %q and not as expected %q\n", queryResult.ClientId, tc.request.ClientId)
 			}
-			if translationTask.Text != tc.request.Text {
-				t.Errorf("Text is %q and not as expected %q\n", translationTask.Text, tc.request.Text)
+			if queryResult.Text != tc.request.Text {
+				t.Errorf("Text is %q and not as expected %q\n", queryResult.Text, tc.request.Text)
 			}
-			if translationTask.SourceLanguage != tc.request.SourceLanguage {
-				t.Errorf("SourceLanguage is %q and not as expected %q\n", translationTask.SourceLanguage, tc.request.SourceLanguage)
+			if queryResult.SourceLanguage != tc.request.SourceLanguage {
+				t.Errorf("SourceLanguage is %q and not as expected %q\n", queryResult.SourceLanguage, tc.request.SourceLanguage)
 			}
-			if translationTask.TargetLanguage != tc.request.TargetLanguage {
-				t.Errorf("TargetLanguage is %q and not as expected %q\n", translationTask.TargetLanguage, tc.request.TargetLanguage)
-			}
-
-			if translationTask.TaskId != response.TaskId {
-				t.Errorf("TaskId is %q and not as expected %q\n", translationTask.TaskId, response.TaskId)
+			if queryResult.TargetLanguage != tc.request.TargetLanguage {
+				t.Errorf("TargetLanguage is %q and not as expected %q\n", queryResult.TargetLanguage, tc.request.TargetLanguage)
 			}
 
-			if translationTask.TranslatedText != response.TranslatedText {
-				t.Errorf("TranslatedText is %q and not as expected %q\n", translationTask.TranslatedText, response.TranslatedText)
+			if queryResult.TaskId != response.TaskId {
+				t.Errorf("TaskId is %q and not as expected %q\n", queryResult.TaskId, response.TaskId)
+			}
+
+			if queryResult.TranslatedText != response.TranslatedText {
+				t.Errorf("TranslatedText is %q and not as expected %q\n", queryResult.TranslatedText, response.TranslatedText)
 			}
 		})
 	}

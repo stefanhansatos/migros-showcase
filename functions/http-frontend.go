@@ -44,12 +44,12 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	traceInfoMap := make(map[string]string)
-	traceInfoMap["source"] = "http-frontend.go"
-	traceInfoMap["target"] = pubsubTopicVersion
-
-	traceInfoSlice := make([]map[string]string, 0)
-	traceInfoSlice = append(traceInfoSlice, traceInfoMap)
+	//traceInfoMap := make(map[string]string)
+	//traceInfoMap["source"] = "http-frontend.go"
+	//traceInfoMap["target"] = pubsubTopicVersion
+	//
+	//traceInfoSlice := make([]map[string]string, 0)
+	//traceInfoSlice = append(traceInfoSlice, traceInfoMap)
 
 	translationTask := TranslationTask{
 		ClientVersion:  request.ClientVersion,
@@ -59,7 +59,7 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 		SourceLanguage: request.SourceLanguage,
 		TargetLanguage: request.TargetLanguage,
 		TranslatedText: "none",
-		TraceInfo:      traceInfoSlice,
+		//TraceInfo:      traceInfoSlice,
 	}
 
 	ctx := context.Background()
