@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"google.golang.org/api/iterator"
-	"google.golang.org/api/option"
 	"io/ioutil"
 	"net/http"
 	"strings"
