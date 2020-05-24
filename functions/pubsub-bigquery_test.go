@@ -33,11 +33,11 @@ func TestE2eBigQuery(t *testing.T) {
 
 	ctx := context.Background()
 
-	bqCredentialFile := "hybrid-cloud-22365-firebase-bq-22365.json"
+	//bqCredentialFile := "hybrid-cloud-22365-firebase-bq-22365.json"
+	//
+	//opt := option.WithCredentialsFile(bqCredentialFile)
 
-	opt := option.WithCredentialsFile(bqCredentialFile)
-
-	client, err := bigquery.NewClient(ctx, projectID, opt)
+	client, err := bigquery.NewClient(ctx, projectID)
 	if err != nil {
 		fmt.Printf("failed to create bigquery client: %v", err)
 		return
