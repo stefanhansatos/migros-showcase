@@ -38,7 +38,6 @@ func PubsubBqPutTranslationTask(ctx context.Context, message pubsub.Message) err
 	if bqTable == "" {
 		return fmt.Errorf("BQ_TABLE not set")
 	}
-	//bqTable = "translations_v0_0_1"
 
 	client, err := bigquery.NewClient(ctx, projectID)
 	if err != nil {

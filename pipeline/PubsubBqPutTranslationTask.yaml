@@ -18,7 +18,7 @@ steps:
            '--runtime=go111', "--trigger-topic=translation_input_0.0.1",
            '--source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip',
            '--service-account=firebase-bq-22365@hybrid-cloud-22365.iam.gserviceaccount.com',
-           '--set-env-vars=BQ_DATASET=${_BQ_DATASET},BQ_TABLE=${_BQ_TABLE}'
+           '--set-env-vars=BQ_DATASET=${_BQ_DATASET},BQ_TABLE=${_BQ_TABLE},BQ_LOCATION=${_BQ_LOCATION}'
     ]
 
 #  - id: prepare-go-test

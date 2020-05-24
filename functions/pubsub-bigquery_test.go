@@ -25,6 +25,12 @@ func TestE2eBigQuery(t *testing.T) {
 	bqDataset := "migros_showcase"
 	bqTable := "translations_v0_0_1"
 
+	//bqLocation := os.Getenv("BQ_LOCATION")
+	//if bqLocation == "" {
+	//	return fmt.Errorf("BQ_LOCATION not set")
+	//}
+	////bqLocation = "US"
+
 	ctx := context.Background()
 
 	bqCredentialFile := "hybrid-cloud-22365-firebase-bq-22365.json"
@@ -156,16 +162,7 @@ func TestE2eBigQuery(t *testing.T) {
 					return
 				}
 			}
-
-			fmt.Printf("queryResult: %v\n", queryResult)
-
-			var translationTaskJson []byte
-			err = json.Unmarshal(translationTaskJson, &queryResult)
-			if err != nil {
-				fmt.Printf("translationTaskJson: %s\n", translationTaskJson)
-				t.Errorf("failed to unmarshal translationTask: %v\n", err)
-				return
-			}
+			//fmt.Printf("queryResult: %v\n", queryResult)
 
 			if queryResult.ClientVersion != tc.request.ClientVersion {
 				t.Errorf("ClientVersion is %q and not as expected %q\n", queryResult.ClientVersion, tc.request.ClientVersion)
