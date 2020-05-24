@@ -29,16 +29,16 @@ func PubsubBqPutTranslationTask(ctx context.Context, message pubsub.Message) err
 	//projectID := "hybrid-cloud-22365"
 
 	bqDataset := os.Getenv("BQ_DATASET")
-	if projectID == "" {
+	if bqDataset == "" {
 		return fmt.Errorf("BQ_DATASET not set")
 	}
-	bqDataset = "migros_showcase"
+	//bqDataset = "migros_showcase"
 
 	bqTable := os.Getenv("BQ_TABLE")
-	if projectID == "" {
+	if bqTable == "" {
 		return fmt.Errorf("BQ_TABLE not set")
 	}
-	//bqTable := "translations_v0_0_1"
+	//bqTable = "translations_v0_0_1"
 
 	client, err := bigquery.NewClient(ctx, projectID)
 	if err != nil {
