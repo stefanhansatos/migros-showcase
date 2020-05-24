@@ -18,6 +18,10 @@ func PubsubBqPutTranslationTask(ctx context.Context, message pubsub.Message) err
 		return fmt.Errorf("failed to unmarshal translationTask: %v", err)
 	}
 
+	for i, val := range os.Environ() {
+		fmt.Printf("%v: %q\n", i, val)
+	}
+
 	projectID := os.Getenv("GCP_PROJECT")
 	if projectID == "" {
 		return fmt.Errorf("GCP_PROJECT not set")
@@ -28,7 +32,7 @@ func PubsubBqPutTranslationTask(ctx context.Context, message pubsub.Message) err
 	if projectID == "" {
 		return fmt.Errorf("BQ_DATASET not set")
 	}
-	//bqDataset := "migros-showcase"
+	bqDataset = "migros_showcase"
 
 	bqTable := os.Getenv("BQ_TABLE")
 	if projectID == "" {
