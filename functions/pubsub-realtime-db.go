@@ -51,8 +51,14 @@ func PubsubRealtimeDbInsertTranslationTask(ctx context.Context, message pubsub.M
 
 	}
 
+	//databaseTable := os.Getenv("RTDB_TABLE")
+	//if databaseTable == "" {
+	//	return fmt.Errorf("RTDB_TABLE not set")
+	//}
+	databaseTable := "translations-v-0-0-1"
+
 	// As an admin, the app has access to read and write all data, regradless of Security Rules
-	ref := client.NewRef("/translations-v-0-0-1/" + translationTask.ClientId + "/" + translationTask.TaskId)
+	ref := client.NewRef("/" + databaseTable + "/" + translationTask.ClientId + "/" + translationTask.TaskId)
 	err = ref.Set(ctx, interface{}(&translationTask))
 	if err != nil {
 		return fmt.Errorf("failed to push list node: %v", err)
