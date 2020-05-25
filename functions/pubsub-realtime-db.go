@@ -22,17 +22,11 @@ func PubsubRealtimeDbInsertTranslationTask(ctx context.Context, message pubsub.M
 		fmt.Printf("%v: %q\n", i, val)
 	}
 
-	//projectID := os.Getenv("GCP_PROJECT")
-	//if projectID == "" {
-	//	return fmt.Errorf("GCP_PROJECT not set")
-	//}
-	//projectID := "hybrid-cloud-22365"
-
-	//databaseURL := os.Getenv("RTDB_URL")
-	//if databaseURL == "" {
-	//	return fmt.Errorf("RTDB_URL not set")
-	//}
-	databaseURL := "https://migros-showcase.firebaseio.com"
+	databaseURL := os.Getenv("RTDB_URL")
+	if databaseURL == "" {
+		return fmt.Errorf("RTDB_URL not set")
+	}
+	//databaseURL := "https://migros-showcase.firebaseio.com"
 
 	conf := &firebase.Config{
 		DatabaseURL: databaseURL,
@@ -51,11 +45,11 @@ func PubsubRealtimeDbInsertTranslationTask(ctx context.Context, message pubsub.M
 
 	}
 
-	//databaseTable := os.Getenv("RTDB_TABLE")
-	//if databaseTable == "" {
-	//	return fmt.Errorf("RTDB_TABLE not set")
-	//}
-	databaseTable := "translations-v-0-0-1"
+	databaseTable := os.Getenv("RTDB_TABLE")
+	if databaseTable == "" {
+		return fmt.Errorf("RTDB_TABLE not set")
+	}
+	//databaseTable := "translations_v_0_0_1"
 
 	// As an admin, the app has access to read and write all data, regradless of Security Rules
 	ref := client.NewRef("/" + databaseTable + "/" + translationTask.ClientId + "/" + translationTask.TaskId)
