@@ -21,21 +21,21 @@ steps:
            '--set-env-vars=RTDB_URL=${_RTDB_URL},RTDB_TABLE=${_RTDB_TABLE}'
     ]
 
-#  - id: prepare-go-test
-#    name: 'gcr.io/cloud-builders/go'
-#    args: ['mod', 'init', 'source.cloud.google.com/hybrid-cloud-22365/github_stefanhansatos_migros-showcase']
-#    env:
-#      - 'GO111MODULE=on'
-#      - 'GOPATH=/go'
-#
-#  - id: prepare-bash-test
-#    name: 'gcr.io/hybrid-cloud-22365/migros-showcase-bash'
-#    args: ['pipeline/PubsubStoreTranslationTask.bash'] # <-
-#
-#  - id: test_e2e-storage_TestE2eStorage # <-
-#    name: 'gcr.io/cloud-builders/go'
-#    args: ['test', '-v', '-run', 'TestE2eStorage'] # <-
-#    env:
-#      - 'GO111MODULE=on'
-#      - 'GOPATH=/go'
+  - id: prepare-go-test
+    name: 'gcr.io/cloud-builders/go'
+    args: ['mod', 'init', 'source.cloud.google.com/hybrid-cloud-22365/github_stefanhansatos_migros-showcase']
+    env:
+      - 'GO111MODULE=on'
+      - 'GOPATH=/go'
+
+  - id: prepare-bash-test
+    name: 'gcr.io/hybrid-cloud-22365/migros-showcase-bash'
+    args: ['pipeline/PubsubRealtimeDbInsertTranslationTask.bash']
+
+  - id: test_pubsub-realtime-db_TestE2eRealtimeDb
+    name: 'gcr.io/cloud-builders/go'
+    args: ['test', '-v', '-run', 'TestE2eRealtimeDb'] # <-
+    env:
+      - 'GO111MODULE=on'
+      - 'GOPATH=/go'
 

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	firebase "firebase.google.com/go"
 	"fmt"
+	"os"
 	"time"
 )
 
@@ -17,13 +18,11 @@ func PubsubStoreTranslationTask(ctx context.Context, message pubsub.Message) err
 		return fmt.Errorf("failed to unmarshal translationTask: %v", err)
 	}
 
-	bucketUrl := "hybrid-cloud-22365.appspot.com"
-
-	//bucketUrl := os.Getenv("FIREBASE_BUCKET_URL")
-	//if bucketUrl == "" {
-	//	return fmt.Errorf("FIREBASE_BUCKET_URL not set\n")
-	//}
-	//fmt.Printf("FIREBASE_BUCKET_URL: %q\n", bucketUrl)
+	bucketUrl := os.Getenv("GS_BUCKET_URL")
+	if bucketUrl == "" {
+		return fmt.Errorf("GS_BUCKET_URL not set\n")
+	}
+	//bucketUrl := "hybrid-cloud-22365.appspot.com"
 
 	config := &firebase.Config{
 		StorageBucket: bucketUrl,

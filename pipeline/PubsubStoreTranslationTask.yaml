@@ -17,7 +17,8 @@ steps:
     args: ['functions', 'deploy', 'PubsubStoreTranslationTask', '--region=europe-west1', '--quiet',
            '--runtime=go111', "--trigger-topic=translation_input_0.0.1",
            '--source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip',
-           '--service-account=firebase-storage-22365@hybrid-cloud-22365.iam.gserviceaccount.com'
+           '--service-account=firebase-storage-22365@hybrid-cloud-22365.iam.gserviceaccount.com',
+           '--set-env-vars=GS_BUCKET_URL=${_GS_BUCKET_URL}'
     ]
 
   - id: prepare-go-test
