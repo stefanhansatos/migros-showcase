@@ -4,7 +4,7 @@
   "disabled": true,
   "filename": "pipeline/PubsubRealtimeDbInsertTranslationTask.yaml",
   "substitutions": {
-    "_RTDB_URL": "migros_showcase",
+    "_RTDB_URL": "https://migros-showcase.firebaseio.com",
     "_RTDB_TABLE": "translations_v0_0_1"
   },
   "triggerTemplate": {
