@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"firebase.google.com/go"
-	"google.golang.org/api/option"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -35,16 +34,16 @@ func TestE2eRealtimeDb(t *testing.T) {
 
 	ctx := context.Background()
 
-	rtdbCredentialFile := "hybrid-cloud-22365-firebase-adminsdk-ca37q-d1e808e47b.json"
+	//rtdbCredentialFile := "hybrid-cloud-22365-firebase-adminsdk-ca37q-d1e808e47b.json"
 
-	opt := option.WithCredentialsFile(rtdbCredentialFile)
+	//opt := option.WithCredentialsFile(rtdbCredentialFile)
 
 	conf := &firebase.Config{
 		DatabaseURL: databaseURL,
 	}
 
 	// Initialize the app with a service account, granting admin privileges
-	app, err := firebase.NewApp(ctx, conf, opt)
+	app, err := firebase.NewApp(ctx, conf)
 	if err != nil {
 		t.Errorf("failed to create new app: %v", err)
 		return
