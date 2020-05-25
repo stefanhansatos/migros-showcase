@@ -17,7 +17,7 @@ steps:
     args: ['functions', 'deploy', 'PubsubRealtimeDbInsertTranslationTask', '--region=europe-west1', '--quiet',
            '--runtime=go111', "--trigger-topic=translation_input_0.0.1",
            '--source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip',
-           '--service-account=firebase-adminsdk-ca37q@hybrid-cloud-22365.iam.gserviceaccount.com'
+           '--service-account=firebase-adminsdk-ca37q@hybrid-cloud-22365.iam.gserviceaccount.com',
            '--set-env-vars=RTDB_URL=${_RTDB_URL},RTDB_TABLE=${_RTDB_TABLE}'
     ]
 
