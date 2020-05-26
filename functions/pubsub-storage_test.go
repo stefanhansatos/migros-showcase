@@ -108,7 +108,7 @@ func TestE2eStorage(t *testing.T) {
 			defer cancel()
 
 			var translationTaskJson []byte
-			rc, err := bucket.Object(tc.request.ClientVersion + "/" + response.TaskId).NewReader(ctx)
+			rc, err := bucket.Object(tc.request.ClientVersion + "/" + tc.request.ClientId + "/" + response.TaskId).NewReader(ctx)
 			if err != nil {
 				fmt.Printf("gsutil cat gs://%s/%s/%s\n", bucketUrl, tc.request.ClientVersion, response.TaskId)
 				t.Errorf("failed to create reader %q\n", err)
