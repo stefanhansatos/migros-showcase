@@ -7,14 +7,10 @@ import (
 	"firebase.google.com/go"
 	"fmt"
 	"os"
-	"time"
 )
 
 // PubsubRealtimeDbInsertTranslationTask stores the translation task in Realtime Database
 func PubsubRealtimeDbInsertTranslationTask(ctx context.Context, message pubsub.Message) error {
-
-	attributes := message.Attributes
-	attributes["PubsubRealtimeDbInsertTranslationTask_ExecutionStart"] = time.Now().String()
 
 	var translationTask TranslationTask
 	err := json.Unmarshal(message.Data, &translationTask)
@@ -64,9 +60,6 @@ func PubsubRealtimeDbInsertTranslationTask(ctx context.Context, message pubsub.M
 		return fmt.Errorf("failed to push list node: %v", err)
 
 	}
-
-	attributes["PubsubRealtimeDbInsertTranslationTask_ExecutionFinished"] = time.Now().String()
-	fmt.Printf("attributes: %v\n", attributes)
 
 	return nil
 }

@@ -10,14 +10,10 @@ import (
 	"golang.org/x/text/language"
 	"net/http"
 	"os"
-	"time"
 )
 
 // TranslationHTTP is an entry point for the smbe
 func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
-
-	attributes := make(map[string]string)
-	attributes["TranslationHTTP_ExecutionStart"] = time.Now().String()
 
 	gcpProject := os.Getenv("GCP_PROJECT")
 	if gcpProject == "" {
@@ -48,13 +44,6 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Println(taskId.String())
-
-	//traceInfoMap := make(map[string]string)
-	//traceInfoMap["source"] = "http-frontend.go"
-	//traceInfoMap["target"] = pubsubTopicVersion
-	//
-	//traceInfoSlice := make([]map[string]string, 0)
-	//traceInfoSlice = append(traceInfoSlice, traceInfoMap)
 
 	translationTask := TranslationTask{
 		ClientVersion:  request.ClientVersion,
@@ -122,37 +111,23 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 
 	loadCommands := make([]string, 0)
 	loadCommands = append(loadCommands,
-		// Logs Viewer: Translation
-		fmt.Sprintf("gcloud logging read '%s'",
-			fmt.Sprintf("resource.type=%s resource.labels.function_name=%s resource.labels.region=%s textPayload=%s",
-				"cloud_function", "Translation", "europe-west1", taskId)),
 
 		// Data: Firebase's Realtime DB
 		fmt.Sprintf("firebase database:get --pretty --instance %s --project %s /translations_v0_0_1/%s/%s",
 			"migros-showcase", "hybrid-cloud-22365", translationTask.ClientId, taskId),
 
-		// Logs Viewer: PubsubRealtimeDbInsertTranslationTask
-		fmt.Sprintf("gcloud logging read '%s'",
-			fmt.Sprintf("resource.type=%s resource.labels.function_name=%s resource.labels.region=%s textPayload=%s",
-				"cloud_function", "PubsubRealtimeDbInsertTranslationTask", "europe-west1", taskId)),
-
 		// Data: BigQuery
 		fmt.Sprintf("bq query '%s'",
 			fmt.Sprintf("SELECT * FROM migros_showcase.translations_v0_0_1 WHERE taskId = %q", taskId)),
-
-		// Logs Viewer: PubsubBqPutTranslationTask
-		fmt.Sprintf("gcloud logging read '%s'",
-			fmt.Sprintf("resource.type=%s resource.labels.function_name=%s resource.labels.region=%s textPayload=%s",
-				"cloud_function", "PubsubBqPutTranslationTask", "europe-west1", taskId)),
 
 		// Data: Cloud Storage
 		fmt.Sprintf("gsutil cat gs://hybrid-cloud-22365.appspot.com/%s/%s/%s | jq",
 			translationTask.ClientVersion, translationTask.ClientId, taskId),
 
-		// Logs Viewer: PubsubStorageSaveTranslationTask
+		// Logs Viewer
 		fmt.Sprintf("gcloud logging read '%s'",
-			fmt.Sprintf("resource.type=%s resource.labels.function_name=%s resource.labels.region=%s textPayload=%s",
-				"cloud_function", "PubsubStorageSaveTranslationTask", "europe-west1", taskId)))
+			fmt.Sprintf("resource.type=%s resource.labels.region=%s textPayload=%s",
+				"cloud_function", "europe-west1", taskId)))
 
 	response := Response{
 		TaskId:         taskId.String(),
@@ -178,12 +153,9 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 	topic := pubsubClient.Topic(pubsubTopicVersion)
 	defer topic.Stop()
 
-	attributes["TranslationHTTP_MessageSendTime"] = time.Now().String()
-
 	var results []*pubsub.PublishResult
 	res := topic.Publish(ctx, &pubsub.Message{
-		Data:       translationJson,
-		Attributes: attributes,
+		Data: translationJson,
 	})
 	results = append(results, res)
 	// Do other work ...
