@@ -10,10 +10,14 @@ import (
 	"golang.org/x/text/language"
 	"net/http"
 	"os"
+	"time"
 )
 
 // TranslationHTTP is an entry point for the smbe
 func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
+
+	attributes := make(map[string]string)
+	attributes["TranslationHTTP_ExecutionStart"] = time.Now().String()
 
 	gcpProject := os.Getenv("GCP_PROJECT")
 	if gcpProject == "" {
@@ -173,9 +177,13 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 
 	topic := pubsubClient.Topic(pubsubTopicVersion)
 	defer topic.Stop()
+
+	attributes["TranslationHTTP_MessageSendTime"] = time.Now().String()
+
 	var results []*pubsub.PublishResult
 	res := topic.Publish(ctx, &pubsub.Message{
-		Data: translationJson,
+		Data:       translationJson,
+		Attributes: attributes,
 	})
 	results = append(results, res)
 	// Do other work ...
