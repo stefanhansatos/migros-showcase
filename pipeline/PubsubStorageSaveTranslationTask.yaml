@@ -12,9 +12,9 @@ steps:
            'translation_input_0.0.1'
     ]
 
-  - id: deploy_PubsubStoreTranslationTask
+  - id: deploy_PubsubStorageSaveTranslationTask
     name: 'gcr.io/cloud-builders/gcloud'
-    args: ['functions', 'deploy', 'PubsubStoreTranslationTask', '--region=europe-west1', '--quiet',
+    args: ['functions', 'deploy', 'PubsubStorageSaveTranslationTask', '--region=europe-west1', '--quiet',
            '--runtime=go111', "--trigger-topic=translation_input_0.0.1",
            '--source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip',
            '--service-account=firebase-storage-22365@hybrid-cloud-22365.iam.gserviceaccount.com',
@@ -30,9 +30,9 @@ steps:
 
   - id: prepare-bash-test
     name: 'gcr.io/hybrid-cloud-22365/migros-showcase-bash'
-    args: ['pipeline/PubsubStoreTranslationTask.bash']
+    args: ['pipeline/PubsubStorageSaveTranslationTask.bash']
 
-  - id: test_e2e-storage_TestE2eStorage
+  - id: test_pubsub-storage_TestE2eStorage
     name: 'gcr.io/cloud-builders/go'
     args: ['test', '-v', '-run', 'TestE2eStorage']
     env:

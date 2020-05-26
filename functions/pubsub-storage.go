@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func PubsubStoreTranslationTask(ctx context.Context, message pubsub.Message) error {
+func PubsubStorageSaveTranslationTask(ctx context.Context, message pubsub.Message) error {
 
 	var translationTask *TranslationTask
 	err := json.Unmarshal(message.Data, &translationTask)
