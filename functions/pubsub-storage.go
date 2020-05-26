@@ -18,6 +18,8 @@ func PubsubStorageSaveTranslationTask(ctx context.Context, message pubsub.Messag
 		return fmt.Errorf("failed to unmarshal translationTask: %v", err)
 	}
 
+	fmt.Println(translationTask.TaskId)
+
 	bucketUrl := os.Getenv("GS_BUCKET_URL")
 	if bucketUrl == "" {
 		return fmt.Errorf("GS_BUCKET_URL not set\n")

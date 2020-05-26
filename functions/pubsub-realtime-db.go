@@ -18,9 +18,11 @@ func PubsubRealtimeDbInsertTranslationTask(ctx context.Context, message pubsub.M
 		return fmt.Errorf("failed to unmarshal translationTask: %v", err)
 	}
 
-	for i, val := range os.Environ() {
-		fmt.Printf("%v: %q\n", i, val)
-	}
+	fmt.Println(translationTask.TaskId)
+
+	//for i, val := range os.Environ() {
+	//	fmt.Printf("%v: %q\n", i, val)
+	//}
 
 	databaseURL := os.Getenv("RTDB_URL")
 	if databaseURL == "" {

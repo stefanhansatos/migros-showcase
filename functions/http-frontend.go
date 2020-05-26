@@ -119,35 +119,35 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 	loadCommands := make([]string, 0)
 	loadCommands = append(loadCommands,
 		// Logs Viewer: Translation
-		fmt.Sprintf("\ngcloud logging read '%s'\n",
+		fmt.Sprintf("gcloud logging read '%s'",
 			fmt.Sprintf("resource.type=%s resource.labels.function_name=%s resource.labels.region=%s textPayload=%s",
 				"cloud_function", "Translation", "europe-west1", taskId)),
 
 		// Data: Firebase's Realtime DB
-		fmt.Sprintf("\nfirebase database:get --pretty --instance %s --project %s /translations_v0_0_1/%s/%s\n",
+		fmt.Sprintf("firebase database:get --pretty --instance %s --project %s /translations_v0_0_1/%s/%s",
 			"migros-showcase", "hybrid-cloud-22365", translationTask.ClientId, taskId),
 
 		// Logs Viewer: PubsubRealtimeDbInsertTranslationTask
-		fmt.Sprintf("\ngcloud logging read '%s'\n",
+		fmt.Sprintf("gcloud logging read '%s'",
 			fmt.Sprintf("resource.type=%s resource.labels.function_name=%s resource.labels.region=%s textPayload=%s",
 				"cloud_function", "PubsubRealtimeDbInsertTranslationTask", "europe-west1", taskId)),
 
 		// Data: BigQuery
-		fmt.Sprintf("\nbq query '%s'\n",
+		fmt.Sprintf("bq query '%s'",
 			fmt.Sprintf("SELECT * FROM migros_showcase.translations_v0_0_1 WHERE taskId = %s", taskId)),
 
 		// Logs Viewer: PubsubBqPutTranslationTask
-		fmt.Sprintf("\ngcloud logging read '%s'\n",
+		fmt.Sprintf("gcloud logging read '%s'",
 			fmt.Sprintf("resource.type=%s resource.labels.function_name=%s resource.labels.region=%s textPayload=%s",
 				"cloud_function", "PubsubBqPutTranslationTask", "europe-west1", taskId)),
 
 		// Logs Viewer: PubsubStorageSaveTranslationTask
-		fmt.Sprintf("\ngcloud logging read '%s'\n",
+		fmt.Sprintf("gcloud logging read '%s'",
 			fmt.Sprintf("resource.type=%s resource.labels.function_name=%s resource.labels.region=%s textPayload=%s",
 				"cloud_function", "PubsubStorageSaveTranslationTask", "europe-west1", taskId)),
 
 		// Data: Cloud Storage
-		fmt.Sprintf("\ngsutil cat gs://hybrid-cloud-22365.appspot.com/%s/%s/%s | jq\n",
+		fmt.Sprintf("gsutil cat gs://hybrid-cloud-22365.appspot.com/%s/%s/%s | jq",
 			translationTask.ClientVersion, translationTask.ClientId, taskId))
 
 	response := Response{
