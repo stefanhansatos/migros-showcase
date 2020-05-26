@@ -43,7 +43,7 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("failed to create new random UUID: %v\n", err), http.StatusInternalServerError)
 		return
 	}
-	fmt.Printf("TaskId: %s\n", taskId)
+	fmt.Println(taskId.String())
 
 	//traceInfoMap := make(map[string]string)
 	//traceInfoMap["source"] = "http-frontend.go"
@@ -117,26 +117,32 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 	//fmt.Println(translations[0].Text)
 
 	loadCommands := make([]string, 0)
-	loadCommands = append(loadCommands, fmt.Sprintf("gsutil cat gs://hybrid-cloud-22365.appspot.com/%s/%s/%s | jq",
-		translationTask.ClientVersion, translationTask.ClientId, taskId),
+	loadCommands = append(loadCommands,
+
+		fmt.Sprintf("gsutil cat gs://hybrid-cloud-22365.appspot.com/%s/%s/%s | jq",
+			translationTask.ClientVersion, translationTask.ClientId, taskId),
+
 		fmt.Sprintf("bq query '%s'",
-			fmt.Sprintf("SELECT * FROM migros_showcase.translations_v0_0_1 WHERE taskId = %q", taskId)),
+			fmt.Sprintf("SELECT * FROM migros_showcase.translations_v0_0_1 WHERE taskId = %s", taskId)),
+
 		fmt.Sprintf("firebase database:get --pretty --instance %s --project %s /translations_v0_0_1/%s/%s",
 			"migros-showcase", "hybrid-cloud-22365", translationTask.ClientId, taskId),
-		fmt.Sprintf("gcloud logging read '%s'",
-			fmt.Sprintf("resource.type=%q resource.labels.function_name=%q resource.labels.region=%q textPayload=%q",
-				"cloud_function", "Translation", "europe-west1", fmt.Sprintf("TaskId: %s", taskId))),
-		fmt.Sprintf("gcloud logging read '%s'",
-			fmt.Sprintf("resource.type=%q resource.labels.function_name=%q resource.labels.region=%q textPayload=%q",
-				"cloud_function", "PubsubBqPutTranslationTask", "europe-west1", fmt.Sprintf("TaskId: %s", taskId))),
-		fmt.Sprintf("gcloud logging read '%s'",
-			fmt.Sprintf("resource.type=%q resource.labels.function_name=%q resource.labels.region=%q textPayload=%q",
-				"cloud_function", "PubsubStorageSaveTranslationTask", "europe-west1", fmt.Sprintf("TaskId: %s", taskId))),
-		fmt.Sprintf("gcloud logging read '%s'",
-			fmt.Sprintf("resource.type=%q resource.labels.function_name=%q resource.labels.region=%q textPayload=%q",
-				"cloud_function", "PubsubRealtimeDbInsertTranslationTask", "europe-west1", fmt.Sprintf("TaskId: %s", taskId))))
 
-	// ''
+		fmt.Sprintf("gcloud logging read '%s'",
+			fmt.Sprintf("resource.type=%s resource.labels.function_name=%s resource.labels.region=%s textPayload=%s",
+				"cloud_function", "Translation", "europe-west1", taskId)),
+
+		fmt.Sprintf("gcloud logging read '%s'",
+			fmt.Sprintf("resource.type=%s resource.labels.function_name=%s resource.labels.region=%s textPayload=%s",
+				"cloud_function", "PubsubRealtimeDbInsertTranslationTask", "europe-west1", taskId)),
+
+		fmt.Sprintf("gcloud logging read '%s'",
+			fmt.Sprintf("resource.type=%s resource.labels.function_name=%s resource.labels.region=%s textPayload=%s",
+				"cloud_function", "PubsubBqPutTranslationTask", "europe-west1", taskId)),
+
+		fmt.Sprintf("gcloud logging read '%s'",
+			fmt.Sprintf("resource.type=%s resource.labels.function_name=%s resource.labels.region=%s textPayload=%s",
+				"cloud_function", "PubsubStorageSaveTranslationTask", "europe-west1", taskId)))
 
 	response := Response{
 		TaskId:         taskId.String(),
