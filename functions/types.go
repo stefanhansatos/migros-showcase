@@ -9,9 +9,9 @@ type Request struct {
 }
 
 type Response struct {
-	TaskId         string `json:"taskId"`
-	TranslatedText string `json:"translatedText"`
-	LoadCommand    string `json:"loadCommand"`
+	TaskId         string   `json:"taskId"`
+	TranslatedText string   `json:"translatedText"`
+	LoadCommands   []string `json:"loadCommands"`
 }
 
 type TranslationTask struct {

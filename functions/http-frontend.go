@@ -115,10 +115,18 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Println(translations[0].Text)
 
+	loadCommands := make([]string, 0)
+	loadCommands = append(loadCommands, fmt.Sprintf("gsutil cat gs://hybrid-cloud-22365.appspot.com/%s/%s/%s | jq",
+		translationTask.ClientVersion, translationTask.ClientId, taskId),
+		fmt.Sprintf("bq query 'SELECT * FROM migros_showcase.translations_v0_0_1 WHERE taskId = %q'",
+			taskId),
+		fmt.Sprintf("firebase database:get --pretty --instance %s --project %s /translations_v0_0_1/%s/%s",
+			"migros-showcase", "hybrid-cloud-22365", translationTask.ClientId, taskId))
+
 	response := Response{
 		TaskId:         taskId.String(),
 		TranslatedText: translations[0].Text,
-		LoadCommand:    fmt.Sprintf("gsutil cat gs://hybrid-cloud-22365.appspot.com/%s | jq", taskId),
+		LoadCommands:   loadCommands,
 	}
 
 	translationTask.TranslatedText = translations[0].Text

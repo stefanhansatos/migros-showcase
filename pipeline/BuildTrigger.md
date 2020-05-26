@@ -3,7 +3,14 @@
   
 # PubsubRealtimeDbInsertTranslationTask
 ######################################### 
-ls -l pipeline/PubsubRealtimeDbInsertTranslationTask.trigger && \
+ls -l TranslationHTTP.trigger && \
+gcloud alpha builds triggers create cloud-source-repositories \
+  --trigger-config=TranslationHTTP.trigger
+  
+  
+# PubsubRealtimeDbInsertTranslationTask
+######################################### 
+ls -l PubsubRealtimeDbInsertTranslationTask.trigger && \
 gcloud alpha builds triggers create cloud-source-repositories \
   --trigger-config=PubsubRealtimeDbInsertTranslationTask.trigger
   
