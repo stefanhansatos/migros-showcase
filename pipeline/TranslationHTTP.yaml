@@ -6,34 +6,34 @@ steps:
            '/workspace/functions/version-0-0-1-development.zip'
     ]
 
-  - id: enironment-verify-01
+  - id: verify-pubsub
     name: 'gcr.io/cloud-builders/gcloud'
     args: ['pubsub', 'topics', 'describe',
            'translation_input_0.0.1'
     ]
 
-  - id: deploy_http_frontend_TranslationHTTP
+  - id: deploy_TranslationHTTP
     name: 'gcr.io/cloud-builders/gcloud'
     args: ['functions', 'deploy', 'Translation', '--region=europe-west1', '--entry-point=TranslationHTTP',
            '--runtime=go111', "--trigger-http",
            '--source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip',
-           '--set-env-vars=PUBSUB_TOPIC_TRUNC=translation_input',
+           '--set-env-vars=PUBSUB_TOPIC_TRUNC=${_PUBSUB_TOPIC_TRUNC}',
            '--allow-unauthenticated',
            '--service-account=smbe-22365@hybrid-cloud-22365.iam.gserviceaccount.com'
     ]
 
-  - id: go-prepare-01
+  - id: prepare-test-go
     name: 'gcr.io/cloud-builders/go'
     args: ['mod', 'init', 'source.cloud.google.com/hybrid-cloud-22365/github_stefanhansatos_migros-showcase']
     env:
       - 'GO111MODULE=on'
       - 'GOPATH=/go'
 
-  - id: prepare-testing-01
+  - id: prepare-test-bash
     name: 'gcr.io/hybrid-cloud-22365/migros-showcase-bash'
-    args: ['pipeline/01_http-frontend.bash']
+    args: ['pipeline/TranslationHTTP.bash']
 
-  - id: test_http_frontend_TranslationHTTP
+  - id: test_http-frontend_TestHttpFrontend
     name: 'gcr.io/cloud-builders/go'
     args: ['test', '-v', '-run', 'TestHttpFrontend']
     env:

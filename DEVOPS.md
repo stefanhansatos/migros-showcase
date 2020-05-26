@@ -47,7 +47,7 @@ gcloud functions deploy PubsubTranslationTaskReceiver --quiet --region europe-we
     --source=https://source.developers.google.com/projects/hybrid-cloud-22365/repos/github_stefanhansatos_migros-showcase/revisions/master/paths/functions
 
    
-curl -X POST "https://europe-west1-hybrid-cloud-22365.cloudfunctions.net/translation" \
+curl -X POST "https://europe-west1-hybrid-cloud-22365.cloudfunctions.net/Translation" \
   -d '{ "clientVersion": "0.0.1", "clientId": "beab10c6-deee-4843-9757-719566214526", "text": "Today is Monday", "sourceLanguage": "en",  "targetLanguage": "fr"}'
 
 

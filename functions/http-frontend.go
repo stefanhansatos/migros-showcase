@@ -122,9 +122,7 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	translationTask.TranslatedText = translations[0].Text
-	fmt.Printf("translationTask.TranslatedText: %v (%t)\n", translationTask.TranslatedText, translationTask.TranslatedText)
 
-	//ctx := context.Background()
 	pubsubClient, err := pubsub.NewClient(ctx, gcpProject)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("failed to create new pubsub client: %v\n", err), http.StatusInternalServerError)
@@ -137,7 +135,6 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("failed to marshal translationTask: %v\n", err), http.StatusInternalServerError)
 		return
 	}
-	fmt.Printf("translationJson: %v (%t)\n", translationJson, translationJson)
 
 	topic := pubsubClient.Topic(pubsubTopicVersion)
 	defer topic.Stop()
