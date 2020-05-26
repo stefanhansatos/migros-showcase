@@ -120,12 +120,23 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 	loadCommands = append(loadCommands, fmt.Sprintf("gsutil cat gs://hybrid-cloud-22365.appspot.com/%s/%s/%s | jq",
 		translationTask.ClientVersion, translationTask.ClientId, taskId),
 		fmt.Sprintf("bq query '%s'",
-			fmt.Sprintf("SELECT * FROM migros_showcase.translations_v0_0_1 WHERE taskId = %q"), taskId),
+			fmt.Sprintf("SELECT * FROM migros_showcase.translations_v0_0_1 WHERE taskId = %q", taskId)),
 		fmt.Sprintf("firebase database:get --pretty --instance %s --project %s /translations_v0_0_1/%s/%s",
-			"migros-showcase", "hybrid-cloud-22365", translationTask.ClientId, taskId))
+			"migros-showcase", "hybrid-cloud-22365", translationTask.ClientId, taskId),
+		fmt.Sprintf("gcloud logging read '%s'",
+			fmt.Sprintf("resource.type=%q resource.labels.function_name=%q resource.labels.region=%q textPayload=%q",
+				"cloud_function", "Translation", "europe-west1", fmt.Sprintf("TaskId: %s", taskId))),
+		fmt.Sprintf("gcloud logging read '%s'",
+			fmt.Sprintf("resource.type=%q resource.labels.function_name=%q resource.labels.region=%q textPayload=%q",
+				"cloud_function", "PubsubBqPutTranslationTask", "europe-west1", fmt.Sprintf("TaskId: %s", taskId))),
+		fmt.Sprintf("gcloud logging read '%s'",
+			fmt.Sprintf("resource.type=%q resource.labels.function_name=%q resource.labels.region=%q textPayload=%q",
+				"cloud_function", "PubsubStorageSaveTranslationTask", "europe-west1", fmt.Sprintf("TaskId: %s", taskId))),
+		fmt.Sprintf("gcloud logging read '%s'",
+			fmt.Sprintf("resource.type=%q resource.labels.function_name=%q resource.labels.region=%q textPayload=%q",
+				"cloud_function", "PubsubRealtimeDbInsertTranslationTask", "europe-west1", fmt.Sprintf("TaskId: %s", taskId))))
 
-	// gcloud logging read 'resource.type="cloud_function" resource.labels.function_name="Translation" resource.labels.region="europe-west1"
-	//textPayload="taskId: %q"    TaskId: '
+	// ''
 
 	response := Response{
 		TaskId:         taskId.String(),
