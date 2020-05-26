@@ -43,6 +43,7 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("failed to create new random UUID: %v\n", err), http.StatusInternalServerError)
 		return
 	}
+	fmt.Printf("TaskId: %s\n", taskId)
 
 	//traceInfoMap := make(map[string]string)
 	//traceInfoMap["source"] = "http-frontend.go"
@@ -113,15 +114,18 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("failed to translate text: %v\n", err), http.StatusInternalServerError)
 		return
 	}
-	fmt.Println(translations[0].Text)
+	//fmt.Println(translations[0].Text)
 
 	loadCommands := make([]string, 0)
 	loadCommands = append(loadCommands, fmt.Sprintf("gsutil cat gs://hybrid-cloud-22365.appspot.com/%s/%s/%s | jq",
 		translationTask.ClientVersion, translationTask.ClientId, taskId),
-		fmt.Sprintf("bq query 'SELECT * FROM migros_showcase.translations_v0_0_1 WHERE taskId = %q'",
-			taskId),
+		fmt.Sprintf("bq query '%s'",
+			fmt.Sprintf("SELECT * FROM migros_showcase.translations_v0_0_1 WHERE taskId = %q"), taskId),
 		fmt.Sprintf("firebase database:get --pretty --instance %s --project %s /translations_v0_0_1/%s/%s",
 			"migros-showcase", "hybrid-cloud-22365", translationTask.ClientId, taskId))
+
+	// gcloud logging read 'resource.type="cloud_function" resource.labels.function_name="Translation" resource.labels.region="europe-west1"
+	//textPayload="taskId: %q"    TaskId: '
 
 	response := Response{
 		TaskId:         taskId.String(),

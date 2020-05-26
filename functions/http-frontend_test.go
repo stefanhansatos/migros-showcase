@@ -152,8 +152,8 @@ func TestHttpFrontendPostData(t *testing.T) {
 					t.Errorf("TranslatedText is %q and not as expected %q\n", response.TranslatedText, tc.response.TranslatedText)
 				}
 
-				if response.LoadCommand == "" {
-					t.Errorf("LoadCommand in response is empty\n")
+				if response.LoadCommands == nil {
+					t.Errorf("LoadCommands in response is nil\n")
 				}
 			}
 
