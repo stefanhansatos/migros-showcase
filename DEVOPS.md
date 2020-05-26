@@ -98,8 +98,5 @@ curl -X POST "https://europe-west1-hybrid-cloud-22365.cloudfunctions.net/transla
   
 ```
 
-docker pull busybox
-
-
 
 
