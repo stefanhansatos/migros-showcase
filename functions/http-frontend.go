@@ -134,21 +134,21 @@ func TranslationHTTP(w http.ResponseWriter, r *http.Request) {
 
 		// Data: BigQuery
 		fmt.Sprintf("bq query '%s'",
-			fmt.Sprintf("SELECT * FROM migros_showcase.translations_v0_0_1 WHERE taskId = %s", taskId)),
+			fmt.Sprintf("SELECT * FROM migros_showcase.translations_v0_0_1 WHERE taskId = %q", taskId)),
 
 		// Logs Viewer: PubsubBqPutTranslationTask
 		fmt.Sprintf("gcloud logging read '%s'",
 			fmt.Sprintf("resource.type=%s resource.labels.function_name=%s resource.labels.region=%s textPayload=%s",
 				"cloud_function", "PubsubBqPutTranslationTask", "europe-west1", taskId)),
 
+		// Data: Cloud Storage
+		fmt.Sprintf("gsutil cat gs://hybrid-cloud-22365.appspot.com/%s/%s/%s | jq",
+			translationTask.ClientVersion, translationTask.ClientId, taskId),
+
 		// Logs Viewer: PubsubStorageSaveTranslationTask
 		fmt.Sprintf("gcloud logging read '%s'",
 			fmt.Sprintf("resource.type=%s resource.labels.function_name=%s resource.labels.region=%s textPayload=%s",
-				"cloud_function", "PubsubStorageSaveTranslationTask", "europe-west1", taskId)),
-
-		// Data: Cloud Storage
-		fmt.Sprintf("gsutil cat gs://hybrid-cloud-22365.appspot.com/%s/%s/%s | jq",
-			translationTask.ClientVersion, translationTask.ClientId, taskId))
+				"cloud_function", "PubsubStorageSaveTranslationTask", "europe-west1", taskId)))
 
 	response := Response{
 		TaskId:         taskId.String(),
