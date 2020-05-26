@@ -1,28 +1,24 @@
 
 ```bash
-cd ..
   
 # PubsubRealtimeDbInsertTranslationTask
 ######################################### 
-ls -l pipeline/PubsubRealtimeDbInsertTranslationTask.trigger
-
+ls -l pipeline/PubsubRealtimeDbInsertTranslationTask.trigger && \
 gcloud alpha builds triggers create cloud-source-repositories \
-  --trigger-config=pipeline/PubsubRealtimeDbInsertTranslationTask.trigger
+  --trigger-config=PubsubRealtimeDbInsertTranslationTask.trigger
   
   
 # PubsubBqPutTranslationTask
 ######################################### 
-ls -l PubsubBqPutTranslationTask.trigger
-
+ls -l PubsubBqPutTranslationTask.trigger && \
 gcloud alpha builds triggers create cloud-source-repositories \
-  --trigger-config=pipeline/PubsubBqPutTranslationTask.trigger
+  --trigger-config=PubsubBqPutTranslationTask.trigger
   
   
 # PubsubStorageSaveTranslationTask
 ######################################### 
-ls -l PubsubStorageSaveTranslationTask.trigger
-
+ls -l PubsubStorageSaveTranslationTask.trigger && \
 gcloud alpha builds triggers create cloud-source-repositories \
-  --trigger-config=pipeline/PubsubStorageSaveTranslationTask.trigger
+  --trigger-config=PubsubStorageSaveTranslationTask.trigger
 ```
 
