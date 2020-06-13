@@ -7,10 +7,8 @@ to connect the following services in a minimal viable product showcase:
 - BigQuery
 - Cloud Storage
 - Cloud Translation
-
-<img src="schema.png"
-     alt="Schema"
-     style="float: left; margin-right: 10px;" />
+     
+![Schema](schema.png)     
 
 
 #### Development
