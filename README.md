@@ -87,7 +87,8 @@ Firebase Realtime Database by Firestore.
 #### "Chain of Translation" - Mobile-first clients developed in Flutter
 
 To create a mobile-first client we tried out Flutter and developed an app running on iOS and Android devices, plus 
-as desktop and web application. The result was developed quick and dirty without any idiomatic at all.
+as desktop and web application. The result was developed quick and dirty without any knowledge of idiomaticity or 
+best practices.
 
 
 ![Flutter Screenshot](flutter-screenshot.png)
