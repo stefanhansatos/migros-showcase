@@ -25,6 +25,12 @@ type TranslationTask struct {
 	//TraceInfo      []map[string]string `json:"traceInfo"`
 }
 
+// For Flutter
+type ResponseForFlutter struct {
+	TaskId         string `json:"taskId"`
+	TranslatedText string `json:"translatedText"`
+}
+
 // Old types for conversion
 
 type TranslationQuery struct {

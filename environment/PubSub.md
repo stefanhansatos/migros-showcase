@@ -1,3 +1,3 @@
 ```bash
-gcloud pubsub topics create workflow_0.0.1
+gcloud pubsub topics create translation_input_0.0.1
 ```
