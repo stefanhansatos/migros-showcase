@@ -1,7 +1,10 @@
 # Serverless backend showcase
 
+The scenario provides an API to translate text in various languages and to store the created information in different 
+services.
+
 Using Cloud Functions in Go and Cloud Pub/Sub for fan-in/out of messages 
-to connect the following services in a showcase:
+to connect the following services:
 
 - Cloud Translation
 - Firebase Realtime Database
@@ -65,6 +68,7 @@ Response:
 
 The response contains a list of commands to access services via CLI.
 
+
 #### Versioning and A/B Testing
 
 We use versioning for our microservices included in the messages to deploy different scenarios within the backend, not 
@@ -74,3 +78,18 @@ disturbing others, and useful for A/B testing, etc.
 
 We follow the principle of least privilege, providing roles to the service account 
 for each active Cloud Function.
+
+#### ToDos
+
+Regarding performance, JSON should be replaced by ProtocolBuffers with gRPC. As well, we should replace the 
+Firebase Realtime Database by Firestore.
+
+#### "Chain of Translation" - Mobile-first clients developed in Flutter
+
+To create a mobile-first client we tried out Flutter and developed an app running on iOS and Android devices, plus 
+as desktop and web application. The result was developed quick and dirty without any idiomatic at all.
+
+
+![Flutter Screenshot](flutter-screenshot.png)
+
+
