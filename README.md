@@ -14,8 +14,17 @@ to connect the following services:
 This schema shows the structure of the backend.
      
 ![Schema](schema.png)
+
+#### Cloud Functions
+
+#### Cloud Pub/Sub
+
+
+
     
 #### DevOps Pipelines 
+
+[README](./pipeline)
 
 Additionally, we provide DevOps pipelines to build, test, and deploy the Cloud functions using Cloud Build. Therefore, 
 we connect our GitHub repository with a GCP Source Repository. We use standard cloud-builder images, and build our own 
