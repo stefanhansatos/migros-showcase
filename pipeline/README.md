@@ -6,13 +6,16 @@ Pros are immutable build-environments complete with all dependencies, for fast b
 
 Additionally, we provide a simple version functionality. I.e., the basename of the YAML file and the bash script are 
 identical with an empty file's basename. This empty file has an ending showing the demanded version. 
-Then, the bash script finds the corresponding directory containing the appropriate function definition. 
+Then, the [bash script](./00_prepare-deployment.bash) finds the corresponding directory containing the appropriate 
+function definition. 
 We prepare the directory, zip it, and store it in a bucket for another build trigger to deploy the function.
 
 Currently, we have no trigger calling other triggers to present longer pipelines with parallel executions.
 
 For convenience and reproducibility, we use trigger configurations in JSON format. These files have the same basename 
 as its related files and the ending "trigger." 
+
+The whole is under construction and not finally decided.
 
 
 
