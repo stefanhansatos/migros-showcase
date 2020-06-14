@@ -17,14 +17,41 @@ This schema shows the structure of the backend.
 
 #### Cloud Functions
 
+[./functions](./functions)
+
+We can trigger Cloud Functions by HTTP calls or as background functions by other event providers.
+
+```bash
+EVENT_PROVIDER                   EVENT_TYPE                                                RESOURCE_TYPE       
+cloud.pubsub                     google.pubsub.topic.publish                               topic               
+cloud.pubsub                     providers/cloud.pubsub/eventTypes/topic.publish           topic               
+cloud.storage                    google.storage.object.archive                             bucket              
+cloud.storage                    google.storage.object.delete                              bucket              
+cloud.storage                    google.storage.object.finalize                            bucket              
+cloud.storage                    google.storage.object.metadataUpdate                      bucket              
+cloud.storage                    providers/cloud.storage/eventTypes/object.change          bucket              
+google.firebase.analytics.event  providers/google.firebase.analytics/eventTypes/event.log  firebase analytics  
+google.firebase.database.ref     providers/google.firebase.database/eventTypes/ref.create  firebase database   
+google.firebase.database.ref     providers/google.firebase.database/eventTypes/ref.delete  firebase database   
+google.firebase.database.ref     providers/google.firebase.database/eventTypes/ref.update  firebase database   
+google.firebase.database.ref     providers/google.firebase.database/eventTypes/ref.write   firebase database   
+google.firestore.document        providers/cloud.firestore/eventTypes/document.create      firestore document  
+google.firestore.document        providers/cloud.firestore/eventTypes/document.delete      firestore document  
+google.firestore.document        providers/cloud.firestore/eventTypes/document.update      firestore document  
+google.firestore.document        providers/cloud.firestore/eventTypes/document.write       firestore document  
+```
+
 #### Cloud Pub/Sub
 
+We can publish messages to Pub/Sub topics by Cloud Functions programmatically. Some services, like Cloud Logging and 
+Dataflow, publish messages to Pub/Sub as a data sink.
 
+We can create Cloud Functions as a subscriber to Pub/Sub topics to process received messages appropriately.
 
     
 #### DevOps Pipelines 
 
-[README](./pipeline)
+[./pipeline](./pipeline)
 
 Additionally, we provide DevOps pipelines to build, test, and deploy the Cloud functions using Cloud Build. Therefore, 
 we connect our GitHub repository with a GCP Source Repository. We use standard cloud-builder images, and build our own 
@@ -89,9 +116,8 @@ We follow the principle of least privilege, providing roles to the service accou
 for each active Cloud Function.
 
 #### ToDos
-
-Regarding performance, JSON should be replaced by ProtocolBuffers with gRPC. As well, we should replace the 
-Firebase Realtime Database by Firestore.
+Regarding performance, JSON should be replaced by ProtocolBuffers with gRPC. We should replace the Firebase Realtime 
+Database by Firestore, and introduce Dataflow as serverless and unified stream and batch data processing. 
 
 #### "Chain of Translation" - Mobile-first clients developed in Flutter
 
