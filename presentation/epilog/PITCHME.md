@@ -13,8 +13,8 @@
 [<i style="font-size:24px" class="fab">&#xf268; memegenerator.net</i>](https://memegenerator.net)
 [<i style="font-size:24px" class="fab">&#xf268; dev.to/rly</i>](https://dev.to/rly)
 <br>
-[<i style="font-size:24px" class="fab">&#xf09b; golang-contexting</i>](https://github.com/stefanhans/golang-contexting)
-[<i style="font-size:24px" class="fab">&#xf09b; talk "distributed-contexting"</i>](https://github.com/stefanhans/distributed-contexting)
+[<i style="font-size:24px" class="fab">&#xf09b; migros-showcase</i>](https://github.com/stefanhansatos/migros-showcase)
+[<i style="font-size:24px" class="fab">&#xf09b; talk "distributed-contexting"</i>](https://github.com/stefanhans/serverless_frontend_showcase)
 [<i style="font-size:24px" class="fab">&#xf09b; talk "go-libp2p"</i>](https://github.com/stefanhans/go-present/tree/master/slides/libp2p)
 <br>
 [<i style="font-size:24px" class="fab">&#xf09b; go-libp2p</i>](https://github.com/libp2p/go-libp2p)
