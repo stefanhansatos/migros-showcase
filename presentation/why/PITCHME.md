@@ -1,1 +1,8 @@
-## why
+## Serverless by GCP's Cloud Functions
+
+- Professionalism of Google |
+- Infrastructure and services provided |
+- Pay as you go |
+- Unix philosophy (microservices) |
+- Highly flexible and dynamic |
+ 
