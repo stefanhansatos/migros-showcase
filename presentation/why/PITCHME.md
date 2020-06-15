@@ -1,4 +1,4 @@
-## Serverless by GCP's Cloud Functions
+## Serverless by Cloud Functions
 
 - Professionalism of Google |
 - Infrastructure and services provided |
