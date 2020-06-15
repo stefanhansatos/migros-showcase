@@ -5,5 +5,5 @@
 --
 ## Showcase "Frontend"
 
-![schema](../assets/image/flutter-screenshot.png)
+![flutter-screenshot](../assets/image/flutter-screenshot.png)
 
