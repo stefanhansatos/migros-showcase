@@ -1,4 +1,4 @@
-### GCP/Firebase, Cloud Functions, <br> Combined As Serverless DevOps 
+### GCP/Firebase & Cloud Functions <br> Combined To Serverless DevOps 
 
 ![SAMBA Deployment](presentation/assets/image/migros.jpeg)
 
