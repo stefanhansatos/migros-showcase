@@ -14,9 +14,9 @@
 [<i style="font-size:24px" class="fab">&#xf268; dev.to/rly</i>](https://dev.to/rly)
 <br>
 [<i style="font-size:24px" class="fab">&#xf09b; migros-showcase</i>](https://github.com/stefanhansatos/migros-showcase)
-[<i style="font-size:24px" class="fab">&#xf09b; talk "distributed-contexting"</i>](https://github.com/stefanhans/serverless_frontend_showcase)
-[<i style="font-size:24px" class="fab">&#xf09b; talk "go-libp2p"</i>](https://github.com/stefanhans/go-present/tree/master/slides/libp2p)
+[<i style="font-size:24px" class="fab">&#xf09b; serverless_frontend_showcase</i>](https://github.com/stefanhans/serverless_frontend_showcase)
 <br>
+[<i style="font-size:24px" class="fab">&#xf09b; talk "GCP/Firebase & Cloud Functions Combined To Serverless DevOps"</i>](https://gitpitch.com/stefanhansatos/migros-showcase#/)
 <br>
 <br>
 <br>
