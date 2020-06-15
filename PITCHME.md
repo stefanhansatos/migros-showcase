@@ -1,12 +1,12 @@
 ### Gitpitch Template
 
----?include=intro/question/PITCHME.md
+---?include=presentation/intro/question/PITCHME.md
 
----?include=why/PITCHME.md
+---?include=presentation/why/PITCHME.md
 
----?include=how/PITCHME.md
+---?include=presentation/how/PITCHME.md
 
----?include=what/PITCHME.md
+---?include=presentation/what/PITCHME.md
 
----?include=epilog/PITCHME.md
+---?include=presentation/epilog/PITCHME.md
 

@@ -5,9 +5,9 @@
 # https://github.com/gitpitch/gitpitch/wiki/Slideshow-Settings
 #
 theme : beige
-theme-override : assets/css/PITCHME.css
+theme-override : presentation/assets/css/PITCHME.css
 highlight : hybrid
-logo : assets/image/mondrian.jpeg
+logo : presentation/assets/image/mondrian.jpeg
 transition : convex
 published : true
-background : assets/image/gp-slideshow-room2.jpg
+background : presentation/assets/image/gp-slideshow-room2.jpg
