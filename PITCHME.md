@@ -1,4 +1,6 @@
-### Gitpitch Template
+### Serverless DevOps 
+
+![SAMBA Deployment](presentation/assets/image/migros.jpeg)
 
 ---?include=presentation/intro/question/PITCHME.md
 
