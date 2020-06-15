@@ -1,4 +1,4 @@
-![thanks](assets/image/thanks.gif)
+![thanks](presentation/assets/image/orly.png)
 
 ### Questions? Feedback?
 
@@ -30,7 +30,7 @@
 [<i style="font-size:24px" class="fab">&#xf099;</i>](https://twitter.com/stefanhans65)
 [<i style="font-size:24px" class="fab">&#xf08c;</i>](https://www.linkedin.com/in/stefan-hans-4545ab132/)
 <br>
-<i style="font-size:24px" class="fas">&#xf1f9; Stefan Hans MM/YYYY </i><i> </i><i style="font-size:24px" class="fab"> &#xf25e;</i>
+<i style="font-size:24px" class="fas">&#xf1f9; Stefan Hans 06/2020 </i><i> </i><i style="font-size:24px" class="fab"> &#xf25e;</i>
 
 
 
