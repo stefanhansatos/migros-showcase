@@ -1,4 +1,4 @@
-![thanks](presentation/assets/image/orly.png)
+![thanks](presentation/assets/image/orly.png&size=50%)
 
 ### Questions? Feedback?
 
