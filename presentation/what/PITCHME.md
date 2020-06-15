@@ -1,9 +1,9 @@
 ## Showcase "Backend"
 
-![schema](../assets/image/schema.png)
+![schema](presentation/assets/image/schema.png)
 
 ---
 ## Showcase "Frontend"
 
-![flutter-screenshot](../assets/image/flutter-screenshot.png)
+![flutter-screenshot](presentation/assets/image/flutter-screenshot.png)
 
