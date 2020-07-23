@@ -15,10 +15,10 @@ steps:
   - id: deploy_PubsubStorageSaveTranslationTask
     name: 'gcr.io/cloud-builders/gcloud'
     args: ['functions', 'deploy', 'PubsubStorageSaveTranslationTask', '--region=europe-west1', '--quiet',
-           '--runtime=go111', "--trigger-topic=translation_input_0.0.1",
+           '--runtime=go113', "--trigger-topic=translation_input_0.0.1",
            '--source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip',
            '--service-account=firebase-storage-22365@hybrid-cloud-22365.iam.gserviceaccount.com',
-           '--set-env-vars=GS_BUCKET_URL=${_GS_BUCKET_URL}'
+           '--set-env-vars=GS_BUCKET_URL=${_GS_BUCKET_URL},GCP_PROJECT=${_GCP_PROJECT}'
     ]
 
   - id: prepare-go-test
