@@ -15,10 +15,10 @@ steps:
   - id: deploy_PubsubBqPutTranslationTask
     name: 'gcr.io/cloud-builders/gcloud'
     args: ['functions', 'deploy', 'PubsubBqPutTranslationTask', '--region=europe-west1', '--quiet',
-           '--runtime=go111', "--trigger-topic=translation_input_0.0.1",
+           '--runtime=go113', "--trigger-topic=translation_input_0.0.1",
            '--source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip',
            '--service-account=firebase-bq-22365@hybrid-cloud-22365.iam.gserviceaccount.com',
-           '--set-env-vars=BQ_DATASET=${_BQ_DATASET},BQ_TABLE=${_BQ_TABLE},BQ_LOCATION=${_BQ_LOCATION}'
+           '--set-env-vars=BQ_DATASET=${_BQ_DATASET},BQ_TABLE=${_BQ_TABLE},BQ_LOCATION=${_BQ_LOCATION},GCP_PROJECT=${_GCP_PROJECT}'
     ]
 
   - id: prepare-go-test
