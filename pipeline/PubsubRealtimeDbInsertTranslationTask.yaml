@@ -15,10 +15,10 @@ steps:
   - id: deploy_PubsubRealtimeDbInsertTranslationTask
     name: 'gcr.io/cloud-builders/gcloud'
     args: ['functions', 'deploy', 'PubsubRealtimeDbInsertTranslationTask', '--region=europe-west1', '--quiet',
-           '--runtime=go111', "--trigger-topic=translation_input_0.0.1",
+           '--runtime=go113', "--trigger-topic=translation_input_0.0.1",
            '--source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip',
            '--service-account=firebase-adminsdk-ca37q@hybrid-cloud-22365.iam.gserviceaccount.com',
-           '--set-env-vars=RTDB_URL=${_RTDB_URL},RTDB_TABLE=${_RTDB_TABLE}'
+           '--set-env-vars=RTDB_URL=${_RTDB_URL},RTDB_TABLE=${_RTDB_TABLE},GCP_PROJECT=${_GCP_PROJECT}'
     ]
 
   - id: prepare-go-test
