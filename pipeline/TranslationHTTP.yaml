@@ -15,7 +15,7 @@ steps:
   - id: deploy_TranslationHTTP
     name: 'gcr.io/cloud-builders/gcloud'
     args: ['functions', 'deploy', 'Translation', '--region=europe-west1', '--entry-point=TranslationHTTP',
-           '--runtime=go111', "--trigger-http",
+           '--runtime=go113', "--trigger-http",
            '--source=gs://hybrid-cloud-22365_migros-showcase-devops/version-0-0-1-development.zip',
            '--set-env-vars=PUBSUB_TOPIC_TRUNC=${_PUBSUB_TOPIC_TRUNC},GCP_PROJECT=${_GCP_PROJECT}',
            '--allow-unauthenticated',
